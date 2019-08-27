@@ -1,6 +1,5 @@
 #include <curves.h>
 #include <assert.h>
-#define HANDMADE_MATH_IMPLEMENTATION
 #include <HandmadeMath.h>
 
 #define CURVES_INSTANCE_COUNT 16384

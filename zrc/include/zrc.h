@@ -14,6 +14,9 @@
 #include <draw_curves.h>
 #include <camera.h>
 #include <visual.h>
+#include <curves_map.h>
+#include <lines_map.h>
+#include <draw_lines_map.h>
 
 typedef struct zrc {
 	timer_t timer;
@@ -29,6 +32,9 @@ typedef struct zrc {
 	draw_curves_t draw_curves;
 	camera_t camera;
 	visual_t visual;
+	curves_map_t curves_map;
+	lines_map_t lines_map;
+	draw_lines_map_t draw_lines_map;
 
 	float accumulator;
 } zrc_t;

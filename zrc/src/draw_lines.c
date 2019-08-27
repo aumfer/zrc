@@ -7,10 +7,14 @@ GLSL(
 uniform mat4 projection;
 
 layout(location = 0) in vec2 position;
+layout(location = 1) in vec4 color;
 
 out vec2 v_position;
+out flat vec4 v_color;
 
 void main() {
+	v_color = color;
+
 	vec4 p = vec4(position, 0, 1);
 	v_position = p.xy;
 	gl_Position = projection * p;
@@ -22,13 +26,14 @@ GLSL(
 	uniform ivec2 resolution;
 
 in vec2 v_position;
+in flat vec4 v_color;
 
 out vec4 fragColor;
 
 void main() {
 	random_init2f(v_position);
 
-	vec3 color = vec3(1, 0, 0);
+	vec3 color = v_color.rgb;
 
 	fragColor = vec4(color, 1.0);
 });
@@ -59,8 +64,8 @@ void draw_lines_destroy(draw_lines_t *draw_lines) {
 }
 
 void draw_lines_update(draw_lines_t *draw_lines, lines_t *lines, const ui_t *ui, const camera_t *camera) {
-	//hmm_mat4 projection = HMM_Orthographic(0, MAP_SIZE, 0, MAP_SIZE, 0, 1);
 	hmm_mat4 projection = camera->projection;
+	//hmm_mat4 projection = HMM_Orthographic(0, MAP_SIZE, 0, MAP_SIZE, 0, 1);
 
 	glViewport(0, 0, ui->framebuffer_size.x, ui->framebuffer_size.y);
 	glUseProgram(draw_lines->program);

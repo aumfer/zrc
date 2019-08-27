@@ -56,12 +56,28 @@ void lines_update(lines_t *lines, const visual_t *visual) {
 	kh_foreach_value_ptr(&visual->map, visual_entity, {
 		vertices[lines->vertex_count + 0].position[0] = (GLfloat)(visual_entity->position.X - visual_entity->radius);
 		vertices[lines->vertex_count + 0].position[1] = (GLfloat)(visual_entity->position.Y - visual_entity->radius);
+		vertices[lines->vertex_count + 0].color[0] = visual_entity->color[0];
+		vertices[lines->vertex_count + 0].color[1] = visual_entity->color[1];
+		vertices[lines->vertex_count + 0].color[2] = visual_entity->color[2];
+		vertices[lines->vertex_count + 0].color[3] = visual_entity->color[3];
 		vertices[lines->vertex_count + 1].position[0] = (GLfloat)(visual_entity->position.X + visual_entity->radius);
 		vertices[lines->vertex_count + 1].position[1] = (GLfloat)(visual_entity->position.Y - visual_entity->radius);
+		vertices[lines->vertex_count + 1].color[0] = visual_entity->color[0];
+		vertices[lines->vertex_count + 1].color[1] = visual_entity->color[1];
+		vertices[lines->vertex_count + 1].color[2] = visual_entity->color[2];
+		vertices[lines->vertex_count + 1].color[3] = visual_entity->color[3];
 		vertices[lines->vertex_count + 2].position[0] = (GLfloat)(visual_entity->position.X + visual_entity->radius);
 		vertices[lines->vertex_count + 2].position[1] = (GLfloat)(visual_entity->position.Y + visual_entity->radius);
+		vertices[lines->vertex_count + 2].color[0] = visual_entity->color[0];
+		vertices[lines->vertex_count + 2].color[1] = visual_entity->color[1];
+		vertices[lines->vertex_count + 2].color[2] = visual_entity->color[2];
+		vertices[lines->vertex_count + 2].color[3] = visual_entity->color[3];
 		vertices[lines->vertex_count + 3].position[0] = (GLfloat)(visual_entity->position.X - visual_entity->radius);
 		vertices[lines->vertex_count + 3].position[1] = (GLfloat)(visual_entity->position.Y + visual_entity->radius);
+		vertices[lines->vertex_count + 3].color[0] = visual_entity->color[0];
+		vertices[lines->vertex_count + 3].color[1] = visual_entity->color[1];
+		vertices[lines->vertex_count + 3].color[2] = visual_entity->color[2];
+		vertices[lines->vertex_count + 3].color[3] = visual_entity->color[3];
 
 		indices[lines->index_count + 0] = lines->vertex_count + 0;
 		indices[lines->index_count + 1] = lines->vertex_count + 1;

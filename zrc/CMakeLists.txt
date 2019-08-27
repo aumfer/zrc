@@ -3,10 +3,14 @@ add_executable(zrc
     src/camera.c
     include/color.h
     src/color.c
+    include/curves_map.h
+    src/curves_map.c
     include/curves.h
     src/curves.c
     include/draw_curves.h
     src/draw_curves.c
+    include/draw_lines_map.h
+    src/draw_lines_map.c
     include/draw_lines.h
     src/draw_lines.c
     include/draw.h
@@ -20,10 +24,14 @@ add_executable(zrc
     include/hash.h
     include/id.h
     src/id.c
+    include/lines_map.h
+    src/lines_map.c
     include/lines.h
     src/lines.c
     include/lsgl.h
     src/lsgl.c
+    include/lsm.h
+    src/lsm.c
     src/main.c
     include/map.h
     src/map.c

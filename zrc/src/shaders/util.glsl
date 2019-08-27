@@ -180,21 +180,21 @@ vec4 rotateZ(vec4 v, float angle) {
 //==========================================================================================
 
 int index2d(ivec2 p, ivec2 bounds) {
-	int index = p.x +
-				p.y * bounds.x;
+	int index = p.y +
+				p.x * bounds.x;
 	return index;
 }
 int index3d(ivec3 p, ivec3 bounds) {
-	int index = p.x +
-				p.y * bounds.x +
-				p.z * bounds.x * bounds.y;
+	int index = p.z +
+				p.y * bounds.y +
+				p.x * bounds.x * bounds.y;
 	return index;
 }
 int index4d(ivec4 p, ivec4 bounds) {
-	int index = p.x +
-				p.y * bounds.x +
-				p.z * bounds.x * bounds.y +
-				p.w * bounds.x * bounds.y * bounds.z;
+	int index = p.w +
+				p.z * bounds.z +
+				p.y * bounds.y * bounds.x +
+				p.x * bounds.z * bounds.y * bounds.x;
 	return index;
 }
 

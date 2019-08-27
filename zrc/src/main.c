@@ -9,6 +9,7 @@ int main(int argc, char **argv) {
 
 	zrc.camera.position = HMM_Vec2(MAP_HALF, MAP_HALF);
 	zrc.camera.zoom = 0.01f;
+	//zrc.camera.zoom = 1;
 
 	for (int i = 0; i < 1024; ++i) {
 		id_t id;
@@ -20,14 +21,14 @@ int main(int argc, char **argv) {
 			.collide_flags = CP_ALL_CATEGORIES,
 			.collide_mask = CP_ALL_CATEGORIES,
 			.response_mask = CP_ALL_CATEGORIES,
-			.radius = rand() % 9 + 1,
-			.position = HMM_Vec2(rand() % MAP_SIZE, rand() % MAP_SIZE),
-			.angle = fmodf(rand(), (HMM_PI32 * 2)),
+			.radius = fmodf(randf(), 9) + 1,
+			.position = HMM_Vec2(fmodf(randf(), MAP_SIZE), fmodf(randf(), MAP_SIZE)),
+			.angle = fmodf(randf(), (HMM_PI32 * 2)),
 
 			//.velocity = cpv(rand() % 10, rand() % 10)
-			.force = HMM_Vec2(rand() % 1000, rand() % 1000)
+			.force = HMM_Vec2(fmodf(randf(), 1000), fmodf(randf(), 1000))
 		});
-
+		
 		visual_entity_t visual_entity = {
 			.id = id
 		};
