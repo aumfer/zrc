@@ -7,6 +7,8 @@ add_executable(zrc
     src/curves_map.c
     include/curves.h
     src/curves.c
+    include/draw_curves_map.h
+    src/draw_curves_map.c
     include/draw_curves.h
     src/draw_curves.c
     include/draw_lines_map.h

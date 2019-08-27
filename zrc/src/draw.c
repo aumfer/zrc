@@ -47,14 +47,15 @@ void main() {
 
 	ivec2 map_coord = ivec2(v_position / MAP_SCALE);
 	//textureGather
-	for (int x = map_coord.x - 1; x <= map_coord.x + 1; ++x) {
-		for (int y = map_coord.y - 1; y <= map_coord.y + 1; ++y) {
+	for (int x = map_coord.x - 2; x <= map_coord.x + 2; ++x) {
+		for (int y = map_coord.y - 2; y <= map_coord.y + 2; ++y) {
 			ivec2 sample_coord = ivec2(x, y);
 			uint count = texelFetch(counts, sample_coord, 0).r;
 			for (int i = 0; i < count; ++i) {
 				vec4 line = texelFetch(lines, ivec3(sample_coord, i), 0);
 				vec2 line_origin = line.xy;
 				vec4 line_color = unpackUnorm4x8(floatBitsToUint(line.z));
+				int instance = floatBitsToInt(line.w);
 				float line_dist = distance(line_origin, v_position);
 				color += line_color.rgb / (line_dist*line_dist);
 			}
@@ -91,13 +92,13 @@ void draw_destroy(draw_t *draw) {
 
 }
 
-void draw_update(draw_t *draw, const ui_t *ui, const camera_t *camera, const lines_map_t *lines_map) {
+void draw_update(draw_t *draw, const ui_t *ui, const camera_t *camera, const curves_map_t *curves_map) {
 	hmm_mat4 projection = camera->projection;
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D_ARRAY, lines_map->tile_texture);
+	glBindTexture(GL_TEXTURE_2D_ARRAY, curves_map->tile_texture);
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, lines_map->count_texture);
+	glBindTexture(GL_TEXTURE_2D, curves_map->count_texture);
 
 	glViewport(0, 0, ui->framebuffer_size.x, ui->framebuffer_size.y);
 	glUseProgram(draw->program);

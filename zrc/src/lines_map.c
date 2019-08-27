@@ -6,7 +6,7 @@ void lines_map_create(lines_map_t *lines_map) {
 	lsgl_object_label(GL_TEXTURE, lines_map->count_texture);
 	glBindTexture(GL_TEXTURE_2D, lines_map->count_texture);
 	glTexStorage2D(GL_TEXTURE_2D, 1, GL_R32UI, MAP_SIZE, MAP_SIZE);
-	glBindImageTexture(COUNT_IMAGE_BINDING, lines_map->count_texture, 0, GL_FALSE, 0, GL_READ_WRITE, GL_R32UI);
+	glBindImageTexture(LINES_MAP_COUNT_IMAGE_BINDING, lines_map->count_texture, 0, GL_FALSE, 0, GL_READ_WRITE, GL_R32UI);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glGenTextures(1, &lines_map->tile_texture);

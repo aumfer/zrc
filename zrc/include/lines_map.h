@@ -7,7 +7,7 @@
 
 #define LINES_MAP_COUNT 8
 
-#define COUNT_IMAGE_BINDING 0
+#define LINES_MAP_COUNT_IMAGE_BINDING 0
 
 typedef struct lines_map {
 	GLuint count_texture;

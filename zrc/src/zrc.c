@@ -17,9 +17,10 @@ void zrc_create(zrc_t *zrc) {
 	draw_curves_create(&zrc->draw_curves);
 	camera_create(&zrc->camera);
 	visual_create(&zrc->visual);
-	//curves_map_create(&zrc->curves_map);
+	curves_map_create(&zrc->curves_map);
 	lines_map_create(&zrc->lines_map);
 	draw_lines_map_create(&zrc->draw_lines_map);
+	draw_curves_map_create(&zrc->draw_curves_map);
 }
 void zrc_destroy(zrc_t *zrc) {
 	timer_destroy(&zrc->timer);
@@ -35,9 +36,10 @@ void zrc_destroy(zrc_t *zrc) {
 	draw_curves_destroy(&zrc->draw_curves);
 	camera_destroy(&zrc->camera);
 	visual_destroy(&zrc->visual);
-	//curves_map_destroy(&zrc->curves_map);
+	curves_map_destroy(&zrc->curves_map);
 	lines_map_destroy(&zrc->lines_map);
 	draw_lines_map_destroy(&zrc->draw_lines_map);
+	draw_curves_map_destroy(&zrc->draw_curves_map);
 }
 
 void zrc_update(zrc_t *zrc) {
@@ -55,18 +57,19 @@ void zrc_update(zrc_t *zrc) {
 	camera_update(&zrc->camera, &zrc->ui);
 	visual_update(&zrc->visual, &zrc->physics, zrc->accumulator);
 
-	draw_update(&zrc->draw, &zrc->ui, &zrc->camera, &zrc->lines_map);
+	draw_update(&zrc->draw, &zrc->ui, &zrc->camera, &zrc->curves_map);
 
 	lines_update(&zrc->lines, &zrc->visual);
 	draw_lines_update(&zrc->draw_lines, &zrc->lines, &zrc->ui, &zrc->camera);
+	//
+	//lines_map_update(&zrc->lines_map, &zrc->lines);
+	//draw_lines_map_update(&zrc->draw_lines_map, &zrc->lines, &zrc->lines_map);
 
 	curves_update(&zrc->curves, &zrc->visual);
-	draw_curves_update(&zrc->draw_curves, &zrc->curves, &zrc->ui, &zrc->camera);
+	//draw_curves_update(&zrc->draw_curves, &zrc->curves, &zrc->ui, &zrc->camera);
 
-	//curves_map_update(&zrc->curves_map, &zrc->visual);
-
-	lines_map_update(&zrc->lines_map, &zrc->lines);
-	draw_lines_map_update(&zrc->draw_lines_map, &zrc->lines, &zrc->lines_map);
+	curves_map_update(&zrc->curves_map, &zrc->visual);
+	draw_curves_map_update(&zrc->draw_curves_map, &zrc->curves, &zrc->curves_map);
 
 	font_begin(&zrc->font);
 	char fps[32];
