@@ -1,0 +1,15 @@
+[submodule "chipmunk/Chipmunk2D"]
+	path = chipmunk/Chipmunk2D
+	url = https://github.com/slembcke/Chipmunk2D
+[submodule "klib/klib"]
+	path = klib/klib
+	url = https://github.com/attractivechaos/klib
+[submodule "glfw/glfw"]
+	path = glfw/glfw
+	url = https://github.com/glfw/glfw
+[submodule "handmade-math/Handmade-Math"]
+	path = handmade-math/Handmade-Math
+	url = https://github.com/HandmadeMath/Handmade-Math
+[submodule "tinycthread/tinycthread"]
+	path = tinycthread/tinycthread
+	url = https://github.com/tinycthread/tinycthread
