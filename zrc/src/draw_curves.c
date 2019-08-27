@@ -50,6 +50,8 @@ in flat vec2 v_point3;
 out vec4 fragColor;
 
 void main() {
+	//float d = 1;
+
 	float d = udBezierSq(v_point0, v_point1, v_point2, v_point3, v_position).x;
 	//d += 1;
 	//d *= 10;
@@ -63,7 +65,7 @@ void main() {
 
 	vec3 color = v_color.rgb / d;
 
-	fragColor = vec4(color, 1.0);
+	fragColor = vec4(color, 0.5);
 });
 
 void draw_curves_create(draw_curves_t *draw_curves) {
@@ -91,11 +93,7 @@ void draw_curves_destroy(draw_curves_t *draw_curves) {
 }
 
 void draw_curves_update(draw_curves_t *draw_curves, curves_t *curves, const ui_t *ui, const camera_t *camera) {
-	//hmm_mat4 projection = HMM_Orthographic(MAP_SIZE/4, MAP_SIZE/2, MAP_SIZE/4, MAP_SIZE/2, 0, 1);
-	//hmm_mat4 projection = HMM_Orthographic(0, (float)ui->framebuffer_size.x, 0, (float)ui->framebuffer_size.y, 0, 1);
-	//hmm_mat4 projection = HMM_Perspective(90, ui->framebuffer_aspect, 0.1, 10000);
-	//hmm_mat4 view = HMM_LookAt(HMM_Vec3(MAP_SIZE/4, MAP_SIZE/4, 100), HMM_Vec3(MAP_SIZE/2, MAP_SIZE/2, 0), HMM_Vec3(0, 0, 1));
-	//projection = HMM_MultiplyMat4(projection, view);
+	hmm_mat4 projection = camera->projection;
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE);
@@ -104,7 +102,7 @@ void draw_curves_update(draw_curves_t *draw_curves, curves_t *curves, const ui_t
 	glUseProgram(draw_curves->program);
 	glUniform4ui(draw_curves->uniforms.random_seed, rand(), rand(), rand(), rand());
 	glUniform2i(draw_curves->uniforms.resolution, ui->framebuffer_size.x, ui->framebuffer_size.y);
-	glUniformMatrix4fv(draw_curves->uniforms.projection, 1, GL_FALSE, (const GLfloat *)&camera->projection);
+	glUniformMatrix4fv(draw_curves->uniforms.projection, 1, GL_FALSE, (const GLfloat *)&projection);
 
 	curves_begin(curves);
 	curves_draw(curves);

@@ -55,7 +55,7 @@ void zrc_update(zrc_t *zrc) {
 	camera_update(&zrc->camera, &zrc->ui);
 	visual_update(&zrc->visual, &zrc->physics, zrc->accumulator);
 
-	draw_update(&zrc->draw, &zrc->ui);
+	draw_update(&zrc->draw, &zrc->ui, &zrc->camera, &zrc->lines_map);
 
 	lines_update(&zrc->lines, &zrc->visual);
 	draw_lines_update(&zrc->draw_lines, &zrc->lines, &zrc->ui, &zrc->camera);

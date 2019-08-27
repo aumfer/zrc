@@ -8,8 +8,8 @@ int main(int argc, char **argv) {
 	zrc_create(&zrc);
 
 	zrc.camera.position = HMM_Vec2(MAP_HALF, MAP_HALF);
-	zrc.camera.zoom = 0.01f;
-	//zrc.camera.zoom = 1;
+	//zrc.camera.zoom = 16;
+	zrc.camera.zoom = 256;
 
 	for (int i = 0; i < 1024; ++i) {
 		id_t id;
@@ -22,6 +22,7 @@ int main(int argc, char **argv) {
 			.collide_mask = CP_ALL_CATEGORIES,
 			.response_mask = CP_ALL_CATEGORIES,
 			.radius = fmodf(randf(), 9) + 1,
+			//.radius = 1,
 			.position = HMM_Vec2(fmodf(randf(), MAP_SIZE), fmodf(randf(), MAP_SIZE)),
 			.angle = fmodf(randf(), (HMM_PI32 * 2)),
 

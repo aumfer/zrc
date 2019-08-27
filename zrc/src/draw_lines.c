@@ -73,9 +73,11 @@ void draw_lines_update(draw_lines_t *draw_lines, lines_t *lines, const ui_t *ui,
 	glUniform2i(draw_lines->uniforms.resolution, ui->framebuffer_size.x, ui->framebuffer_size.y);
 	glUniformMatrix4fv(draw_lines->uniforms.projection, 1, GL_FALSE, (const GLfloat *)&projection);
 
-	lines_begin(lines);
-	lines_draw(lines, 1);
-	lines_end(lines);
+	for (int i = 0; i < 1; ++i) { // todo try rebind framebuffer to get > 8 outputs
+		lines_begin(lines);
+		lines_draw(lines, 1);
+		lines_end(lines);
+	}
 
 	glUseProgram(0);
 }

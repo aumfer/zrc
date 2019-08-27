@@ -8,15 +8,15 @@ GLSL(
 layout(location = 0) in vec2 position;
 layout(location = 1) in vec4 color;
 
-out vec2 v_position;
+out flat vec2 v_position;
 out flat vec4 v_color;
 
 void main() {
 	v_color = color;
 
-	vec4 p = projection * vec4(position, 0, 1);
+	vec4 p = vec4(position, 0, 1);
 	v_position = p.xy;
-	gl_Position = p;
+	gl_Position = projection * p;
 });
 
 static GLchar fragment_src[] = GLSL_BEGIN
@@ -25,7 +25,7 @@ GLSL(
 uniform ivec2 resolution;
 layout(binding = 0, r32ui) uniform uimage2D count_texture;
 
-in vec2 v_position;
+in flat vec2 v_position;
 in flat vec4 v_color;
 
 layout(location = 0) out vec4 fragColor0;
@@ -40,33 +40,41 @@ layout(location = 7) out vec4 fragColor7;
 void main() {
 	random_init2f(v_position);
 
-	ivec2 image_coord = ivec2(gl_FragCoord.xy);
+	const float MAP_SCALE = 16; //todo
+
+	//ivec2 image_coord = ivec2(gl_FragCoord.xy);
+	ivec2 image_coord = ivec2(v_position / MAP_SCALE);
 	uint count = imageAtomicAdd(count_texture, image_coord, 1);
+
+	if (count > 8) {
+		//discard;
+	}
+	vec4 result = vec4(v_position, uintBitsToFloat(packUnorm4x8(v_color)), 1);
 
 	switch (count) {
 	case 0:
-		fragColor0 = v_color;
+		fragColor0 = result;
 		break;
 	case 1:
-		fragColor1 = v_color;
+		fragColor1 = result;
 		break;
 	case 2:
-		fragColor2 = v_color;
+		fragColor2 = result;
 		break;
 	case 3:
-		fragColor3 = v_color;
+		fragColor3 = result;
 		break;
 	case 4:
-		fragColor4 = v_color;
+		fragColor4 = result;
 		break;
 	case 5:
-		fragColor5 = v_color;
+		fragColor5 = result;
 		break;
 	case 6:
-		fragColor6 = v_color;
+		fragColor6 = result;
 		break;
 	case 7:
-		fragColor7 = v_color;
+		fragColor7 = result;
 		break;
 	}
 });

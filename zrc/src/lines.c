@@ -100,13 +100,19 @@ void lines_update(lines_t *lines, const visual_t *visual) {
 }
 
 void lines_begin(lines_t *lines) {
+	//glEnable(GL_LINE_SMOOTH);
+	//glLineWidth(16.0);
+
 	glBindVertexArray(lines->vertex_array);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lines->index_buffer);
 }
 void lines_draw(lines_t *lines, int instance_count) {
-	glDrawElementsInstanced(GL_LINES, lines->index_count, GL_UNSIGNED_INT, NULL, 1);
+	glDrawElementsInstanced(GL_LINES, lines->index_count, GL_UNSIGNED_INT, NULL, instance_count);
 }
 void lines_end(lines_t *lines) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	//glDisable(GL_LINE_SMOOTH);
+	//glLineWidth(1.0);
 }
