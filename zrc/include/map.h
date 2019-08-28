@@ -5,7 +5,7 @@
 #include <hash.h>
 #include <lsm.h>
 
-#define WORLD_SIZE (1024*16)
+#define WORLD_SIZE (1024*2)
 #define WORLD_HALF (WORLD_SIZE/2)
 #define MAP_SCALE 16
 #define MAP_SIZE (WORLD_SIZE/MAP_SCALE)

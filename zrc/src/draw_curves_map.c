@@ -3,7 +3,7 @@
 static GLchar vertex_src[] = GLSL_BEGIN
 #include <shaders/util.glsl>
 GLSL(
-	uniform mat4 projection;
+uniform mat4 projection;
 
 layout(location = 0) in vec2 position;
 layout(location = 1) in vec2 world_position;
@@ -11,16 +11,19 @@ layout(location = 2) in vec2 size;
 layout(location = 3) in vec4 color;
 
 out vec2 v_position;
+out flat vec2 v_world_position;
 out flat vec4 v_color;
 out flat int v_instance;
 
 void main() {
 	v_color = color;
+	v_world_position = world_position;
 	v_instance = gl_InstanceID;
 
 	const float MAP_SCALE = 16; // todo
 	// force each curve to be at least MAP_SCALE large so it rasterizes
-	vec2 raster_size = max(vec2(MAP_SCALE), size);
+	vec2 raster_size = max(vec2(MAP_SCALE/2), size);
+	raster_size = size;
 	vec2 raster_position = world_position + (position * raster_size);
 	v_position = world_position + (position * size);
 	gl_Position = projection * vec4(raster_position, 0, 1);
@@ -29,10 +32,12 @@ void main() {
 static GLchar fragment_src[] = GLSL_BEGIN
 #include <shaders/util.glsl>
 GLSL(
-	uniform ivec2 resolution;
+uniform ivec2 resolution;
+
 layout(binding = 1, r32ui) uniform uimage2D count_texture;
 
 in vec2 v_position;
+in flat vec2 v_world_position;
 in flat vec4 v_color;
 in flat int v_instance;
 
@@ -57,7 +62,7 @@ void main() {
 	if (count > 8) {
 		discard;
 	}
-	vec4 result = vec4(v_position, uintBitsToFloat(packUnorm4x8(v_color)), intBitsToFloat(v_instance));
+	vec4 result = vec4(v_world_position, uintBitsToFloat(packUnorm4x8(v_color)), intBitsToFloat(v_instance));
 
 	switch (count) {
 	case 0:
@@ -115,6 +120,7 @@ void draw_curves_map_destroy(draw_curves_map_t *draw_curves_map) {
 
 void draw_curves_map_update(draw_curves_map_t *draw_curves_map, curves_t *curves, const curves_map_t *curves_map) {
 	glClearTexImage(curves_map->count_texture, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
+	glMemoryBarrier(GL_ALL_BARRIER_BITS);
 
 	hmm_mat4 projection = HMM_Orthographic(0, WORLD_SIZE, 0, WORLD_SIZE, 0, 1);
 
@@ -127,9 +133,15 @@ void draw_curves_map_update(draw_curves_map_t *draw_curves_map, curves_t *curves
 	glUniform2i(draw_curves_map->uniforms.resolution, MAP_SIZE, MAP_SIZE);
 	glUniformMatrix4fv(draw_curves_map->uniforms.projection, 1, GL_FALSE, (const GLfloat *)&projection);
 
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL_RECTANGLE_NV);
+	glEnable(GL_CONSERVATIVE_RASTERIZATION_NV);
+	//glEnable(GL_DEPTH_CLAMP);
 	curves_begin(curves);
 	curves_draw(curves);
 	curves_end(curves);
+	//glDisable(GL_DEPTH_CLAMP);
+	glDisable(GL_CONSERVATIVE_RASTERIZATION_NV);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glUseProgram(0);
 

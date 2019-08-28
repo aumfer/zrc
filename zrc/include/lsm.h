@@ -4,7 +4,7 @@
 #include <HandmadeMath.h>
 #include <stdlib.h>
 
-#define randf() ((float)rand())
+#define randf() ((float)rand() / RAND_MAX)
 
 typedef struct hmm_ivec2 {
 	int X, Y;

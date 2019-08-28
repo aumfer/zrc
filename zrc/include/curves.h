@@ -13,6 +13,17 @@
 #define CURVES_POINT_2_ATTRIBUTE 6
 #define CURVES_POINT_3_ATTRIBUTE 7
 
+typedef struct curves_instance {
+	GLvec2 position;
+	GLvec2 size;
+	GLvec2 point0;
+	GLvec2 point1;
+	GLvec2 point2;
+	GLvec2 point3;
+	GLubvec4 color;
+	int _[3];
+} curves_instance_t;
+
 typedef struct curves {
 	fsq_t fsq;
 

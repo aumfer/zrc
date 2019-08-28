@@ -57,19 +57,24 @@ void zrc_update(zrc_t *zrc) {
 	camera_update(&zrc->camera, &zrc->ui);
 	visual_update(&zrc->visual, &zrc->physics, zrc->accumulator);
 
-	draw_update(&zrc->draw, &zrc->ui, &zrc->camera, &zrc->curves_map);
-
+	glMemoryBarrier(GL_ALL_BARRIER_BITS);
+	draw_update(&zrc->draw, &zrc->ui, &zrc->camera, &zrc->curves_map, &zrc->curves);
+	glMemoryBarrier(GL_ALL_BARRIER_BITS);
 	lines_update(&zrc->lines, &zrc->visual);
+	glMemoryBarrier(GL_ALL_BARRIER_BITS);
 	draw_lines_update(&zrc->draw_lines, &zrc->lines, &zrc->ui, &zrc->camera);
+	glMemoryBarrier(GL_ALL_BARRIER_BITS);
 	//
 	//lines_map_update(&zrc->lines_map, &zrc->lines);
 	//draw_lines_map_update(&zrc->draw_lines_map, &zrc->lines, &zrc->lines_map);
-
+	glMemoryBarrier(GL_ALL_BARRIER_BITS);
 	curves_update(&zrc->curves, &zrc->visual);
 	//draw_curves_update(&zrc->draw_curves, &zrc->curves, &zrc->ui, &zrc->camera);
-
+	glMemoryBarrier(GL_ALL_BARRIER_BITS);
 	curves_map_update(&zrc->curves_map, &zrc->visual);
+	glMemoryBarrier(GL_ALL_BARRIER_BITS);
 	draw_curves_map_update(&zrc->draw_curves_map, &zrc->curves, &zrc->curves_map);
+	glMemoryBarrier(GL_ALL_BARRIER_BITS);
 
 	font_begin(&zrc->font);
 	char fps[32];

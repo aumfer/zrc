@@ -5,17 +5,9 @@
 #define CURVES_INSTANCE_COUNT 16384
 #define CURVES_INSTANCE_SIZE ((CURVES_INSTANCE_COUNT)*sizeof(curves_instance_t))
 
-typedef struct curves_instance {
-	GLvec2 position;
-	GLvec2 size;
-	GLubvec4 color;
-	GLvec2 point0;
-	GLvec2 point1;
-	GLvec2 point2;
-	GLvec2 point3;
-} curves_instance_t;
-
 void curves_create(curves_t *curves) {
+	assert(sizeof(curves_instance_t) % 32 == 0);
+
 	fsq_create(&curves->fsq);
 	lsgl_object_label(GL_BUFFER, curves->fsq.index_buffer);
 	lsgl_object_label(GL_BUFFER, curves->fsq.vertex_buffer);
@@ -94,6 +86,7 @@ void curves_update(curves_t *curves, const visual_t *visual) {
 		instances[curves->instance_count].point3[1] = (GLfloat)(visual_entity->position.Y + visual_entity->radius);
 
 		++curves->instance_count;
+		assert(curves->instance_count < CURVES_INSTANCE_COUNT);
 	});
 
 	glUnmapBuffer(GL_ARRAY_BUFFER);
