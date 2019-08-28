@@ -6,7 +6,7 @@ static GLbyte vertices[] = {
 	SCHAR_MAX, SCHAR_MIN,
 	SCHAR_MAX, SCHAR_MAX
 };
-static GLubyte indices[] = {
+static GLuint indices[] = {
 	0, 1, 3,
 	0, 3, 2
 };
@@ -42,7 +42,7 @@ void fsq_begin(fsq_t *fsq) {
 }
 void fsq_draw(fsq_t *fsq, int instance_count) {
 	GLsizei index_count = lsgl_countof(indices);
-	glDrawElementsInstanced(GL_TRIANGLES, index_count, GL_UNSIGNED_BYTE, NULL, instance_count);
+	glDrawElementsInstanced(GL_TRIANGLES, index_count, GL_UNSIGNED_INT, NULL, instance_count);
 }
 void fsq_end(fsq_t *fsq) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
