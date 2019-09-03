@@ -5,40 +5,33 @@
 #include <fsq.h>
 #include <visual.h>
 
-#define CURVES_POSITION_ATTRIBUTE 1
-#define CURVES_SIZE_ATTRIBUTE 2
-#define CURVES_COLOR_ATTRIBUTE 3
-#define CURVES_POINT_0_ATTRIBUTE 4
-#define CURVES_POINT_1_ATTRIBUTE 5
-#define CURVES_POINT_2_ATTRIBUTE 6
-#define CURVES_POINT_3_ATTRIBUTE 7
-
 typedef struct curves_instance {
 	GLvec2 position;
 	GLvec2 size;
+	GLvec4 color;
 	GLvec2 point0;
 	GLvec2 point1;
 	GLvec2 point2;
 	GLvec2 point3;
-	GLubvec4 color;
-	int _[3];
 } curves_instance_t;
 
+#define CURVES_INSTANCE_BINDING 0
+
 typedef struct curves {
+	curves();
+	~curves();
+
 	fsq_t fsq;
 
 	GLuint instance_buffer;
 
 	GLuint instance_count;
+
+	void update(const visual &);
+
+	void begin() const;
+	void draw() const;
+	void end() const;
 } curves_t;
-
-void curves_create(curves_t *);
-void curves_destroy(curves_t *);
-
-void curves_update(curves_t *, const visual_t *);
-
-void curves_begin(curves_t *);
-void curves_draw(curves_t *);
-void curves_end(curves_t *);
 
 #endif

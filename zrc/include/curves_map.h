@@ -13,11 +13,11 @@ typedef struct curves_map {
 	GLuint count_texture;
 	GLuint tile_texture;
 	GLuint framebuffer;
+
+	curves_map();
+	~curves_map();
+
+	void update(const visual &);
 } curves_map_t;
-
-void curves_map_create(curves_map_t *);
-void curves_map_destroy(curves_map_t *);
-
-void curves_map_update(curves_map_t *, const visual_t *);
 
 #endif

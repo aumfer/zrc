@@ -2,9 +2,8 @@
 #define _PHYSICS_H_
 
 #include <chipmunk/chipmunk_private.h>
-#include <id.h>
-#include <hash.h>
-#include <HandmadeMath.h>
+#include <zsys.hpp>
+#include <lsm.h>
 
 #define PHYSICS_MAX_ENTITIES 16384
 
@@ -22,12 +21,12 @@ typedef struct physics_entity {
 	float max_speed;
 	float max_spin;
 
-	hmm_vec2 position;
+	glm::vec2 position;
 	float angle;
-	hmm_vec2 velocity;
+	glm::vec2 velocity;
 	float angular_velocity;
 
-	hmm_vec2 force;
+	glm::vec2 force;
 	float torque;
 
 	cpBody *body;
@@ -36,21 +35,16 @@ typedef struct physics_entity {
 	khash_t(physics_entity_contact_map) contact_map;
 } physics_entity_t;
 
-KHASH_INIT(physics_map, id_t, physics_entity_t, 1, id_hash_func, id_hash_equal)
-
-typedef struct physics {
-	khash_t(physics_map) map;
-	cpSpace space;
+typedef struct physics : zsys<physics_entity, PHYSICS_MAX_ENTITIES> {
+	cpSpace *space;
 	cpCollisionHandler *collision_handler;
+
+	physics();
+	~physics();
+
+	void add(const physics_entity &);
+	void del(id);
+	void update(float dt);
 } physics_t;
-
-void physics_create(physics_t *);
-void physics_destroy(physics_t *);
-
-void physics_add(physics_t *, physics_entity_t *);
-void physics_remove(physics_t *, id_t);
-physics_entity_t *physics_get(physics_t *, id_t);
-
-void physics_update(physics_t *, float dt);
 
 #endif

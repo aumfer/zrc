@@ -7,9 +7,7 @@
 #include <curves_map.h>
 #include <curves.h>
 
-#define DRAW_INSTANCE_BUFFER_BINDING 0
-
-typedef struct draw {
+typedef struct draw_map {
 	fsq_t fsq;
 
 	GLuint vertex_shader;
@@ -20,12 +18,14 @@ typedef struct draw {
 		GLint random_seed;
 		GLint resolution;
 		GLint projection;
+		GLint map_scale;
 	} uniforms;
-} draw_t;
 
-void draw_create(draw_t *);
-void draw_destroy(draw_t *);
+	draw_map();
+	~draw_map();
 
-void draw_update(draw_t *, const ui_t *, const camera_t *, const curves_map_t *, const curves_t *);
+	void update(const ui &, const camera &, const curves_map&, const curves &);
+} draw_map_t;
+
 
 #endif

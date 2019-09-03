@@ -9,13 +9,13 @@ typedef struct fsq {
 	GLuint index_buffer;
 	GLuint vertex_buffer;
 	GLuint vertex_array;
+
+	fsq();
+	~fsq();
+
+	void begin() const;
+	void draw(int index_count) const;
+	void end() const;
 } fsq_t;
-
-void fsq_create(fsq_t *);
-void fsq_destroy(fsq_t *);
-
-void fsq_begin(fsq_t *);
-void fsq_draw(fsq_t *, int instance_count);
-void fsq_end(fsq_t *);
 
 #endif

@@ -11,20 +11,20 @@ static GLuint indices[] = {
 	0, 3, 2
 };
 
-void fsq_create(fsq_t *fsq) {
-	glGenBuffers(1, &fsq->index_buffer);
-	lsgl_object_label(GL_BUFFER, fsq->index_buffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fsq->index_buffer);
+fsq::fsq() {
+	glGenBuffers(1, &index_buffer);
+	lsgl_object_label(GL_BUFFER, index_buffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
 	glBufferStorage(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, 0);
 
-	glGenBuffers(1, &fsq->vertex_buffer);
-	lsgl_object_label(GL_BUFFER, fsq->vertex_buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, fsq->vertex_buffer);
+	glGenBuffers(1, &vertex_buffer);
+	lsgl_object_label(GL_BUFFER, vertex_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 	glBufferStorage(GL_ARRAY_BUFFER, sizeof(vertices), vertices, 0);
 
-	glGenVertexArrays(1, &fsq->vertex_array);
-	lsgl_object_label(GL_VERTEX_ARRAY, fsq->vertex_array);
-	glBindVertexArray(fsq->vertex_array);
+	glGenVertexArrays(1, &vertex_array);
+	lsgl_object_label(GL_VERTEX_ARRAY, vertex_array);
+	glBindVertexArray(vertex_array);
 
 	glVertexAttribPointer(FSQ_POSITION_ATTRIBUTE, 2, GL_BYTE, GL_TRUE, 0, 0);
 	glEnableVertexAttribArray(FSQ_POSITION_ATTRIBUTE);
@@ -33,18 +33,19 @@ void fsq_create(fsq_t *fsq) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
-void fsq_destroy(fsq_t *fsq) {
+fsq::~fsq() {
+
 }
 
-void fsq_begin(fsq_t *fsq) {
-	glBindVertexArray(fsq->vertex_array);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fsq->index_buffer);
+void fsq::begin() const {
+	glBindVertexArray(vertex_array);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
 }
-void fsq_draw(fsq_t *fsq, int instance_count) {
+void fsq::draw(int instance_count) const {
 	GLsizei index_count = lsgl_countof(indices);
 	glDrawElementsInstanced(GL_TRIANGLES, index_count, GL_UNSIGNED_INT, NULL, instance_count);
 }
-void fsq_end(fsq_t *fsq) {
+void fsq::end() const {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }

@@ -8,11 +8,8 @@ typedef struct moving_average {
 	float buffer[MOVING_AVERAGE_COUNT];
 	unsigned index;
 	float avg;
+
+	void update(float);
 } moving_average_t;
-
-void moving_average_create(moving_average_t *);
-void moving_average_destroy(moving_average_t *);
-
-void moving_average_update(moving_average_t *, float);
 
 #endif

@@ -10,6 +10,9 @@ typedef struct ui {
 		double x, y;
 	} pointer;
 	struct {
+		double x, y;
+	} scroll;
+	struct {
 		int x, y;
 	} window_size;
 	float window_aspect;
@@ -23,11 +26,10 @@ typedef struct ui {
 	int prev_keys[GLFW_KEY_LAST];
 	int mouse_buttons[GLFW_MOUSE_BUTTON_LAST];
 	int prev_mouse_buttons[GLFW_MOUSE_BUTTON_LAST];
+
+	ui();
+	~ui();
+	void update();
 } ui_t;
-
-void ui_create(ui_t *);
-void ui_destroy(ui_t *);
-
-void ui_update(ui_t *);
 
 #endif

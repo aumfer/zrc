@@ -17,11 +17,12 @@ typedef struct draw_curves {
 		GLint resolution;
 		GLint projection;
 	} uniforms;
+
+	draw_curves();
+	~draw_curves();
+
+	void update(curves &, const ui&, const camera &);
 } draw_curves_t;
 
-void draw_curves_create(draw_curves_t *);
-void draw_curves_destroy(draw_curves_t *);
-
-void draw_curves_update(draw_curves_t *, curves_t *, const ui_t *, const camera_t *);
 
 #endif

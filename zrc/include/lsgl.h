@@ -7,7 +7,7 @@
 #define xstr(a) str(a)
 #define str(a) #a
 
-#define GLSL_DEFINE(x) "\n"x"\n"
+#define GLSL_DEFINE(x) "\n" x "\n"
 #define GLSL_BEGIN \
 	GLSL_DEFINE("#version 430")
 #define GLSL_COMPUTE(x,y,z) \

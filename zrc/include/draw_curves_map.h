@@ -15,12 +15,12 @@ typedef struct draw_curves_map {
 		GLint resolution;
 		GLint projection;
 		GLint count_texture;
+		GLint map_scale;
 	} uniforms;
+
+	draw_curves_map();
+	~draw_curves_map();
+	void update(curves_t &, const curves_map_t &);
 } draw_curves_map_t;
-
-void draw_curves_map_create(draw_curves_map_t *);
-void draw_curves_map_destroy(draw_curves_map_t *);
-
-void draw_curves_map_update(draw_curves_map_t *, curves_t *, const curves_map_t *);
 
 #endif

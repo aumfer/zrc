@@ -3,11 +3,10 @@
 
 typedef struct timer {
 	float prev, time, elapsed, dt;
+
+	timer();
+	~timer();
+	void update();
 } timer_t;
-
-void timer_create(timer_t *);
-void timer_destroy(timer_t *);
-
-void timer_update(timer_t *);
 
 #endif
