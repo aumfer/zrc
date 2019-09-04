@@ -93,16 +93,16 @@ void main() {
 	//color += vec3(float(sum) / 9.0);
 	
 
-	float d = grid_line((v_position + map_scale/2) / map_scale);
-	//float d = hexagon(v_position, 1).z;
+	float d = 1e10;
+	//d = min(d, grid_line((v_position + map_scale / 2) / map_scale) * map_scale);
+	d = min(d, grid_point((v_position + map_scale / 2) / map_scale) * map_scale);
+	//d = min(d, hexagon(v_position, map_scale).z);
 	//d -= 1;
 	//d = max(0, d);
 
 	color += rgb(25, 25, 25);
-	color += vec3(hash1(v_position)) * 0.01;
-	if (d < 0.00015) {
-		color += rgb(100, 149, 237) / 8;
-	}
+	color += vec3(hash1(v_position)) * 0.05;
+	color += rgb(100, 149, 237) * fill2(d) * 0.05;
 
 	if (max_count > 6) {
 		color = vec3(1, 0, 0);

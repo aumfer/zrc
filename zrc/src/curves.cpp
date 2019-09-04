@@ -44,14 +44,18 @@ void curves::update(const visual &visual) {
 		instances[instance_count].color[2] = visual_entity.color[2] / 255.0f;
 		instances[instance_count].color[3] = visual_entity.color[3] / 255.0f;
 
-		instances[instance_count].point0[0] = (GLfloat)(visual_entity.position.x + visual_entity.points[0].x*visual_entity.radius);
-		instances[instance_count].point0[1] = (GLfloat)(visual_entity.position.y + visual_entity.points[0].y*visual_entity.radius);
-		instances[instance_count].point1[0] = (GLfloat)(visual_entity.position.x + visual_entity.points[1].x*visual_entity.radius);
-		instances[instance_count].point1[1] = (GLfloat)(visual_entity.position.y + visual_entity.points[1].y*visual_entity.radius);
-		instances[instance_count].point2[0] = (GLfloat)(visual_entity.position.x + visual_entity.points[2].x*visual_entity.radius);
-		instances[instance_count].point2[1] = (GLfloat)(visual_entity.position.y + visual_entity.points[2].y*visual_entity.radius);
-		instances[instance_count].point3[0] = (GLfloat)(visual_entity.position.x + visual_entity.points[3].x*visual_entity.radius);
-		instances[instance_count].point3[1] = (GLfloat)(visual_entity.position.y + visual_entity.points[3].y*visual_entity.radius);
+		glm::vec4 p0 = visual_entity.transform * glm::vec4(visual_entity.points[0], 0, 1);
+		instances[instance_count].point0[0] = p0.x;
+		instances[instance_count].point0[1] = p0.y;
+		glm::vec4 p1 = visual_entity.transform * glm::vec4(visual_entity.points[1], 0, 1);
+		instances[instance_count].point1[0] = p1.x;
+		instances[instance_count].point1[1] = p1.y;
+		glm::vec4 p2 = visual_entity.transform * glm::vec4(visual_entity.points[2], 0, 1);
+		instances[instance_count].point2[0] = p2.x;
+		instances[instance_count].point2[1] = p2.y;
+		glm::vec4 p3 = visual_entity.transform * glm::vec4(visual_entity.points[3], 0, 1);
+		instances[instance_count].point3[0] = p3.x;
+		instances[instance_count].point3[1] = p3.y;
 
 		++instance_count;
 		assert(instance_count < CURVES_INSTANCE_COUNT);

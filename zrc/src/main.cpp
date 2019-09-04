@@ -22,6 +22,7 @@ int main(int argc, char **argv) {
 
 		//physics_entity//.velocity = cpv(rand() % 10, rand() % 10)
 		physics_entity.force = glm::linearRand(glm::vec2(-1000), glm::vec2(1000));
+		physics_entity.torque = glm::linearRand<float>(-1000, 1000);
 		game.physics.add(physics_entity);
 		
 		visual_entity_t visual_entity = {};

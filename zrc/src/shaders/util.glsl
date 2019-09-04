@@ -563,6 +563,13 @@ float fill(float d, float k) {
 float fill(float d) {
     return fill(d, 0.0015);
 }
+float fill2(float d) {
+	//float w = fwidth( d );
+	//return 1 - smoothstep( 0.5 - w, 0.5 + w, d );
+	float s = d - 0.5;
+	float v = s / fwidth( s );
+    return 1 - clamp( v + 0.5, 0.0, 1.0 );
+}
 
 float grid_line(vec2 p) {
     float d = mincomp(abs(fract(p) - 0.5));

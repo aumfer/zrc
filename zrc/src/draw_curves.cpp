@@ -85,9 +85,12 @@ void main() {
 
 	//d = max(1, d);
 	//d += 1;
-	d *= 2;
+	//d *= 2;
+	//d = clamp(d* (.75 + sin(gl_FragCoord.x*M_PI*.5)*.5), 0.0, 1.0);
 
-	vec3 color = instance.color.rgb / d;
+	vec3 color = instance.color.rgb * fill2(d);
+	color += clamp(instance.color.rgb / d, 0, 1) * 0.5;
+	//color *= 1 - hash1(v_position) * 0.5;
 
 	fragColor = vec4(color, 1);
 });
