@@ -35,6 +35,8 @@ void zrc::draw() {
 	draw_curves.update(curves, ui, camera);
 	//curves_map_update(&zrc->curves_map, &zrc->visual);
 	//draw_curves_map_update(&zrc->draw_curves_map, &zrc->curves, &zrc->curves_map);
+	spines.update(visual);
+	draw_spines.update(spines, ui, camera);
 
 	font.begin();
 	char fps_str[32];

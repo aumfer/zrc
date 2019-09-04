@@ -1,7 +1,6 @@
 #include <zrc.h>
 #include <tinycthread.h>
 #include <color.h>
-#include <glm/gtc/random.hpp>
 
 static zrc_t game;
 

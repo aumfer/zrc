@@ -2,7 +2,11 @@
 #define _LSM_H_
 
 #include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/random.hpp>
+#include <glm/gtc/noise.hpp>
+#include <glm/gtc/reciprocal.hpp>
 #include <stdlib.h>
 
 #define randf() ((float)rand() / RAND_MAX)

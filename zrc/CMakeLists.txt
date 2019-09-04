@@ -15,6 +15,8 @@ add_executable(zrc
     src/draw_curves.cpp
     include/draw_map.h
     src/draw_map.cpp
+    include/draw_spines.hpp
+    src/draw_spines.cpp
     include/font.h
     src/font.cpp
     include/fsq.h
@@ -33,8 +35,11 @@ add_executable(zrc
     src/map.cpp
     include/moving_average.h
     src/moving_average.cpp
+    src/par_streamlines.c
     include/physics.h
     src/physics.cpp
+    include/spines.hpp
+    src/spines.cpp
     include/timer.h
     src/timer.cpp
     include/ui.h
@@ -54,7 +59,7 @@ target_link_libraries(zrc PUBLIC chipmunk_static)
 target_link_libraries(zrc PUBLIC glfw)
 target_link_libraries(zrc PUBLIC glm)
 target_link_libraries(zrc PUBLIC klib)
+target_link_libraries(zrc PUBLIC par)
 target_link_libraries(zrc PUBLIC tinycthread)
-target_link_libraries(zrc PUBLIC tinyspline)
 
 set_target_properties(zrc PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")

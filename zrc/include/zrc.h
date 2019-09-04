@@ -15,23 +15,27 @@
 #include <curves_map.h>
 #include <draw_curves_map.h>
 #include <camera_control.h>
+#include <spines.hpp>
+#include <draw_spines.hpp>
 
 typedef struct zrc {
-	timer_t update_timer;
-	timer_t draw_timer;
-	moving_average_t fps;
-	physics_t physics;
-	ui_t ui;
-	map_t map;
-	draw_map_t draw_map;
-	font_t font;
-	curves_t curves;
-	draw_curves_t draw_curves;
-	camera_t camera;
-	visual_t visual;
-	curves_map_t curves_map;
-	draw_curves_map_t draw_curves_map;
-	camera_control_t camera_control;
+	timer update_timer;
+	timer draw_timer;
+	moving_average fps;
+	physics physics;
+	ui ui;
+	map map;
+	draw_map draw_map;
+	font font;
+	curves curves;
+	draw_curves draw_curves;
+	camera camera;
+	visual visual;
+	curves_map curves_map;
+	draw_curves_map draw_curves_map;
+	camera_control camera_control;
+	spines spines;
+	draw_spines draw_spines;
 
 	float accumulator;
 

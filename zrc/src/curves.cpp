@@ -44,14 +44,14 @@ void curves::update(const visual &visual) {
 		instances[instance_count].color[2] = visual_entity.color[2] / 255.0f;
 		instances[instance_count].color[3] = visual_entity.color[3] / 255.0f;
 
-		instances[instance_count].point0[0] = (GLfloat)(visual_entity.position.x + visual_entity.d0.x*visual_entity.radius);
-		instances[instance_count].point0[1] = (GLfloat)(visual_entity.position.y + visual_entity.d0.y*visual_entity.radius);
-		instances[instance_count].point1[0] = (GLfloat)(visual_entity.position.x + visual_entity.d1.x*visual_entity.radius);
-		instances[instance_count].point1[1] = (GLfloat)(visual_entity.position.y + visual_entity.d1.y*visual_entity.radius);
-		instances[instance_count].point2[0] = (GLfloat)(visual_entity.position.x + visual_entity.d2.x*visual_entity.radius);
-		instances[instance_count].point2[1] = (GLfloat)(visual_entity.position.y + visual_entity.d2.y*visual_entity.radius);
-		instances[instance_count].point3[0] = (GLfloat)(visual_entity.position.x + visual_entity.d3.x*visual_entity.radius);
-		instances[instance_count].point3[1] = (GLfloat)(visual_entity.position.y + visual_entity.d3.y*visual_entity.radius);
+		instances[instance_count].point0[0] = (GLfloat)(visual_entity.position.x + visual_entity.points[0].x*visual_entity.radius);
+		instances[instance_count].point0[1] = (GLfloat)(visual_entity.position.y + visual_entity.points[0].y*visual_entity.radius);
+		instances[instance_count].point1[0] = (GLfloat)(visual_entity.position.x + visual_entity.points[1].x*visual_entity.radius);
+		instances[instance_count].point1[1] = (GLfloat)(visual_entity.position.y + visual_entity.points[1].y*visual_entity.radius);
+		instances[instance_count].point2[0] = (GLfloat)(visual_entity.position.x + visual_entity.points[2].x*visual_entity.radius);
+		instances[instance_count].point2[1] = (GLfloat)(visual_entity.position.y + visual_entity.points[2].y*visual_entity.radius);
+		instances[instance_count].point3[0] = (GLfloat)(visual_entity.position.x + visual_entity.points[3].x*visual_entity.radius);
+		instances[instance_count].point3[1] = (GLfloat)(visual_entity.position.y + visual_entity.points[3].y*visual_entity.radius);
 
 		++instance_count;
 		assert(instance_count < CURVES_INSTANCE_COUNT);

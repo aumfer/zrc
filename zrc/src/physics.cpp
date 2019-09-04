@@ -21,7 +21,7 @@ physics::~physics() {
 }
 
 void physics::add(const physics_entity &create) {
-	physics_entity &physics_entity = zsys::add(create);
+	physics_entity physics_entity = create;
 
 	//cpFloat mass = physics_entity.radius * physics_entity.radius;
 	cpFloat mass = 1;
@@ -44,13 +44,14 @@ void physics::add(const physics_entity &create) {
 	//cpShapeSetElasticity(&e.circle.shape, 0.0f);
 	//cpShapeSetFriction(&e.circle.shape, 0.7f);
 
-	cpBodySetUserData(physics_entity.body, &physics_entity);
-	cpShapeSetUserData(&physics_entity.circle->shape, &physics_entity);
-	cpSpaceAddBody(space, physics_entity.body);
-	cpSpaceAddShape(space, &physics_entity.circle->shape);
+	physics_entity_t &created = zsys::add(physics_entity);
+	cpBodySetUserData(created.body, &created);
+	cpShapeSetUserData(&created.circle->shape, &created);
+	cpSpaceAddBody(space, created.body);
+	cpSpaceAddShape(space, &created.circle->shape);
 }
 void physics::del(id id) {
-	physics_entity_t *physics_entity = get(id);
+	physics_entity *physics_entity = get(id);
 	
 	cpSpaceRemoveShape(space, &physics_entity->circle->shape);
 	cpSpaceRemoveBody(space, physics_entity->body);

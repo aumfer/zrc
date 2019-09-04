@@ -5,7 +5,8 @@
 #include <physics.h>
 #include <lsm.h>
 #include <color.h>
-#include <tinyspline.h>
+
+#define VISUAL_ENTITY_POINTS 8
 
 typedef struct visual_entity {
 	id_t id;
@@ -18,7 +19,7 @@ typedef struct visual_entity {
 	glm::vec2 mins;
 	glm::vec2 maxs;
 
-	glm::vec2 d0, d1, d2, d3;
+	glm::vec2 points[VISUAL_ENTITY_POINTS];
 } visual_entity_t;
 
 typedef struct visual : zsys<visual_entity> {

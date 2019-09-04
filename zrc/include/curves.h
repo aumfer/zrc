@@ -4,6 +4,7 @@
 #include <lsgl.h>
 #include <fsq.h>
 #include <visual.h>
+#include <map.h>
 
 typedef struct curves_instance {
 	GLvec2 position;
@@ -16,6 +17,9 @@ typedef struct curves_instance {
 } curves_instance_t;
 
 #define CURVES_INSTANCE_BINDING 0
+
+#define CURVES_MAX_SPLINES 16384
+#define CURVES_MAX_VERTICES (CURVES_MAX_SPLINES*16)
 
 typedef struct curves {
 	curves();
