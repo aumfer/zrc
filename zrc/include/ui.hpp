@@ -4,6 +4,14 @@
 #include <lsgl.h>
 #include <GLFW/glfw3.h>
 
+typedef enum ui_state {
+	UI_INVALID = -1,
+	UI_UP,
+	UI_DOWN,
+	UI_PRESSED,
+	UI_RELEASED
+} ui_state_t;
+
 typedef struct ui {
 	GLFWwindow *window;
 	struct {
@@ -30,6 +38,8 @@ typedef struct ui {
 	ui();
 	~ui();
 	void update();
+
+	ui_state button(int button) const;
 } ui_t;
 
 #endif

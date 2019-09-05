@@ -2,8 +2,8 @@
 #define _CURVES_MAP_H_
 
 #include <lsgl.h>
-#include <visual.h>
-#include <map.h>
+#include <visual.hpp>
+#include <map.hpp>
 
 #define CURVES_MAP_COUNT 8
 

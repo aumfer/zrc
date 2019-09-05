@@ -1,20 +1,20 @@
 #ifndef _ZRC_H_
 #define _ZRC_H_
 
-#include <timer.h>
-#include <moving_average.h>
-#include <physics.h>
-#include <ui.h>
-#include <map.h>
-#include <draw_map.h>
-#include <font.h>
-#include <curves.h>
-#include <draw_curves.h>
-#include <camera.h>
-#include <visual.h>
-#include <curves_map.h>
-#include <draw_curves_map.h>
-#include <camera_control.h>
+#include <timer.hpp>
+#include <moving_average.hpp>
+#include <physics.hpp>
+#include <ui.hpp>
+#include <map.hpp>
+#include <draw_map.hpp>
+#include <font.hpp>
+#include <curves.hpp>
+#include <draw_curves.hpp>
+#include <camera.hpp>
+#include <visual.hpp>
+#include <curves_map.hpp>
+#include <draw_curves_map.hpp>
+#include <control.hpp>
 #include <spines.hpp>
 #include <draw_spines.hpp>
 
@@ -33,7 +33,7 @@ typedef struct zrc {
 	visual visual;
 	curves_map curves_map;
 	draw_curves_map draw_curves_map;
-	camera_control camera_control;
+	control control;
 	spines spines;
 	draw_spines draw_spines;
 

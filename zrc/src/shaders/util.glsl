@@ -175,6 +175,36 @@ vec4 rotateZ(vec4 v, float angle) {
 	return Result;
 }
 
+vec2 to_dir(float angle) {
+	vec2 dir = vec2(
+		cos(angle),
+		sin(angle)
+	);
+	return dir;
+}
+float to_angle(vec2 dir) {
+	float angle = atan(dir.y, dir.x);
+	return angle;
+}
+
+mat4 mat4_scale(float x, float y, float z){
+    return mat4(
+        vec4(x,   0.0, 0.0, 0.0),
+        vec4(0.0, y,   0.0, 0.0),
+        vec4(0.0, 0.0, z,   0.0),
+        vec4(0.0, 0.0, 0.0, 1.0)
+    );
+}
+
+mat4 mat4_translate(float x, float y, float z){
+    return mat4(
+        vec4(1.0, 0.0, 0.0, 0.0),
+        vec4(0.0, 1.0, 0.0, 0.0),
+        vec4(0.0, 0.0, 1.0, 0.0),
+        vec4(x,   y,   z,   1.0)
+    );
+}
+
 //==========================================================================================
 // indexing
 //==========================================================================================
@@ -584,36 +614,35 @@ float attenuation(float dist) {
 	return 1 / (dist*dist);
 }
 
+//==========================================================================================
+// splines
+//==========================================================================================
+
 /**
- * math & angles
+ * Tension. Default Catmul-Rom matrix
+ * has tension equal to 0.5.
+ *
+ * Values below 0.5 will cause sharp edges,
+ * values above 0.5 will produce more curly lines.
  */
-vec2 to_dir(float angle) {
-	vec2 dir = vec2(
-		cos(angle),
-		sin(angle)
-	);
-	return dir;
-}
-float to_angle(vec2 dir) {
-	float angle = atan(dir.y, dir.x);
-	return angle;
-}
+const float T = 0.7;
 
-mat4 mat4_scale(float x, float y, float z){
-    return mat4(
-        vec4(x,   0.0, 0.0, 0.0),
-        vec4(0.0, y,   0.0, 0.0),
-        vec4(0.0, 0.0, z,   0.0),
-        vec4(0.0, 0.0, 0.0, 1.0)
-    );
-}
+/**
+ * Catmull-Rom Matrix
+ */
+const mat4 CRM = mat4(-T,        2.0 - T,  T - 2.0,         T,
+                       2.0 * T,  T - 3.0,  3.0 - 2.0 * T,  -T,
+                      -T,        0.0,      T,               0.0,
+                       0.0,      1.0,      0.0,             0.0);
+/**
+ * Catmull-Rom Spline Interpolation
+ */
+vec2 interpolate(vec2 G1, vec2 G2, vec2 G3, vec2 G4, float t) {
+    vec2 A = G1 * CRM[0][0] + G2 * CRM[0][1] + G3 * CRM[0][2] + G4 * CRM[0][3];
+    vec2 B = G1 * CRM[1][0] + G2 * CRM[1][1] + G3 * CRM[1][2] + G4 * CRM[1][3];
+    vec2 C = G1 * CRM[2][0] + G2 * CRM[2][1] + G3 * CRM[2][2] + G4 * CRM[2][3];
+    vec2 D = G1 * CRM[3][0] + G2 * CRM[3][1] + G3 * CRM[3][2] + G4 * CRM[3][3];
 
-mat4 mat4_translate(float x, float y, float z){
-    return mat4(
-        vec4(1.0, 0.0, 0.0, 0.0),
-        vec4(0.0, 1.0, 0.0, 0.0),
-        vec4(0.0, 0.0, 1.0, 0.0),
-        vec4(x,   y,   z,   1.0)
-    );
+    return t * (t * (t * A + B) + C) + D;
 }
 )

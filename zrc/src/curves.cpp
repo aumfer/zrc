@@ -1,13 +1,16 @@
-#include <curves.h>
+#include <curves.hpp>
 #include <assert.h>
-#include <lsm.h>
+#include <lsm.hpp>
+#include <stdio.h>
 
 #define CURVES_INSTANCE_COUNT 16384
 #define CURVES_INSTANCE_SIZE ((CURVES_INSTANCE_COUNT)*sizeof(curves_instance_t))
 
-curves::curves() {
-	assert(sizeof(curves_instance_t) % 32 == 0);
+//static_assert(sizeof(curves_instance_t) % 32 == 0, "sizeof curves_instance must be multiple of 32");
+static_assert(sizeof(curves_instance_t) % 16 == 0, "sizeof curves_instance must be multiple of 16");
 
+curves::curves() {
+	printf("sizeof(curves_instance_t) %dx%zd=%zd\n", CURVES_INSTANCE_COUNT, sizeof(curves_instance_t), CURVES_INSTANCE_SIZE);
 	lsgl_object_label(GL_BUFFER, fsq.index_buffer);
 	lsgl_object_label(GL_BUFFER, fsq.vertex_buffer);
 	lsgl_object_label(GL_VERTEX_ARRAY, fsq.vertex_array);
@@ -24,7 +27,7 @@ curves::~curves() {
 
 }
 
-void curves::update(const visual &visual) {
+void curves::update(const visual &visual, const control &control) {
 	instance_count = 0;
 
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, instance_buffer);
@@ -32,30 +35,22 @@ void curves::update(const visual &visual) {
 	assert(instances);
 
 	visual.foreach([&](const visual_entity &visual_entity) {
-		instances[instance_count].position[0] = (GLfloat)visual_entity.position.x;
-		instances[instance_count].position[1] = (GLfloat)visual_entity.position.y;
+		instances[instance_count].position = visual_entity.position;
+		instances[instance_count].radius = visual_entity.radius;
+		instances[instance_count].color = visual_entity.color;
+		instances[instance_count].transform = visual_entity.transform;
+		instances[instance_count].velocity = visual_entity.velocity;
 
-		GLfloat size = (GLfloat)visual_entity.radius * 2;
-		instances[instance_count].size[0] = size * 2;
-		instances[instance_count].size[1] = size * 2;
+		for (int i = 0; i < CURVES_POINTS; ++i) {
+			glm::vec4 p = visual_entity.transform * glm::vec4(visual_entity.points[i], 0, 1);
+			instances[instance_count].points[i] = p;
+		}
 
-		instances[instance_count].color[0] = visual_entity.color[0] / 255.0f;
-		instances[instance_count].color[1] = visual_entity.color[1] / 255.0f;
-		instances[instance_count].color[2] = visual_entity.color[2] / 255.0f;
-		instances[instance_count].color[3] = visual_entity.color[3] / 255.0f;
-
-		glm::vec4 p0 = visual_entity.transform * glm::vec4(visual_entity.points[0], 0, 1);
-		instances[instance_count].point0[0] = p0.x;
-		instances[instance_count].point0[1] = p0.y;
-		glm::vec4 p1 = visual_entity.transform * glm::vec4(visual_entity.points[1], 0, 1);
-		instances[instance_count].point1[0] = p1.x;
-		instances[instance_count].point1[1] = p1.y;
-		glm::vec4 p2 = visual_entity.transform * glm::vec4(visual_entity.points[2], 0, 1);
-		instances[instance_count].point2[0] = p2.x;
-		instances[instance_count].point2[1] = p2.y;
-		glm::vec4 p3 = visual_entity.transform * glm::vec4(visual_entity.points[3], 0, 1);
-		instances[instance_count].point3[0] = p3.x;
-		instances[instance_count].point3[1] = p3.y;
+		GLuint flags = CURVES_FLAGS_NONE;
+		if (visual_entity.id == control.select_entity) {
+			flags |= CURVES_FLAGS_SELECTED;
+		}
+		instances[instance_count].flags = flags;
 
 		++instance_count;
 		assert(instance_count < CURVES_INSTANCE_COUNT);

@@ -1,6 +1,10 @@
 #ifndef LS_LSGL_H
 #define LS_LSGL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <GL/gl3w.h>
 #include <stdlib.h>
 
@@ -18,7 +22,7 @@
 #define GLSL(...) #__VA_ARGS__
 #define lsgl_offsetof(s,m) ((const GLvoid *)offsetof(s,m))
 #define lsgl_offsetof_off(s,m,o) ((const GLvoid *)(offsetof(s,m)+(o)))
-//#define lsgl_countof(x) _countof(x)
+	//#define lsgl_countof(x) _countof(x)
 #define lsgl_countof(x) (sizeof(x) / sizeof(x[0]))
 
 #ifdef _WIN32
@@ -29,9 +33,9 @@
 
 #ifdef _DEBUG
 #define GL_CHECK(stmt) do { \
-            stmt; \
-            lsgl_checkerror(); \
-        } while (0)
+        stmt; \
+        lsgl_checkerror(); \
+    } while (0)
 #else
 #define GL_CHECK(stmt) stmt
 #endif
@@ -88,5 +92,9 @@ void lsgl_compileshader(GLuint shader, const char *src, int length);
 void lsgl_linkprogram(GLuint program);
 void lsgl_checkerror(void);
 GLint lsgl_checkprogram(GLuint program);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

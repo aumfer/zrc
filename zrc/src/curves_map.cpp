@@ -1,4 +1,4 @@
-#include <curves_map.h>
+#include <curves_map.hpp>
 #include <assert.h>
 
 curves_map::curves_map() {

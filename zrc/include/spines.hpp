@@ -1,7 +1,7 @@
 #pragma once
 
 #include <par_streamlines.h>
-#include <visual.h>
+#include <visual.hpp>
 
 #define SPINES_MAX_SPINES 16384
 #define SPINES_MAX_VERTICES (SPINES_MAX_SPINES*16)

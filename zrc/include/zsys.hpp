@@ -1,53 +1,48 @@
 #pragma once
 
-#include <hash.h>
-#include <id.h>
+#include <id.hpp>
 #include <assert.h>
+#include <unordered_map>
 
 template<typename E, int MAX_ENTITIES=0>
 struct zsys {
 	zsys() {
 		if (MAX_ENTITIES) {
-			int size = (int)ceil(MAX_ENTITIES / __ac_HASH_UPPER);
-			map.resize(size);
+			//int size = (int)ceil(MAX_ENTITIES / map.max_load_factor());
+			//map.rehash(size);
+			map.reserve(MAX_ENTITIES);
 		}
 	}
 
 	E &add(const E &e) {
-		assert(!MAX_ENTITIES || map.n_occupied < MAX_ENTITIES);
+		assert(!MAX_ENTITIES || map.size() < MAX_ENTITIES);
 
-		int absent;
-		khint_t k = map.put(e.id, &absent);
-		return kh_val(&map, k) = e;
+		auto i = map.insert({ e.id, e });
+		return i.first->second;
 	}
 	void del(id id) {
-		khint_t k = map.get(id);
-		map.del(k);
+		map.erase(id);
 	}
 	E *get(id id) {
-		khint_t k = map.get(id);
-		return &kh_val(&map, k);
+		return &map.find(id)->second;
 	}
 	const E *get(id id) const {
-		khint_t k = map.get(id);
-		return &kh_val(&map, k);
+		return &map.find(id)->second;
 	}
 
 	template<typename R>
 	void foreach(const R& receiver) {
-		E *e;
-		kh_foreach_value_ptr(&map, e, {
-			receiver(*e);
-		});
+		for (auto& n : map) {
+			receiver(n.second);
+		}
 	}
 	template<typename R>
 	void foreach(const R& receiver) const  {
-		const E *e;
-		kh_foreach_value_ptr(&map, e, {
-			receiver(*e);
-		});
+		for (const auto& n : map) {
+			receiver(n.second);
+		}
 	}
 
 private:
-	kh_template<id, E, id_hash_func, id_hash_equal> map;
+	std::unordered_map<id, E, id_hasher, id_eqer> map;
 };

@@ -2,8 +2,8 @@
 
 #include <lsgl.h>
 #include <spines.hpp>
-#include <ui.h>
-#include <camera.h>
+#include <ui.hpp>
+#include <camera.hpp>
 
 typedef struct draw_spines {
 	GLuint vertex_array;

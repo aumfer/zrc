@@ -1,5 +1,5 @@
 #include <spines.hpp>
-#include <map.h>
+#include <map.hpp>
 #include <stdlib.h>
 
 spines::spines() {

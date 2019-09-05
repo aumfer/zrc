@@ -3,11 +3,13 @@
 
 #include <chipmunk/chipmunk_private.h>
 #include <zsys.hpp>
-#include <lsm.h>
+#include <lsm.hpp>
 
 #define PHYSICS_MAX_ENTITIES 16384
 
-KHASH_INIT(physics_entity_contact_map, id_t, char, 0, id_hash_func, id_hash_equal)
+typedef struct physics_entity_contact {
+	id_t id;
+} physics_entity_contact_t;
 
 typedef struct physics_entity {
 	id_t id;
@@ -32,7 +34,7 @@ typedef struct physics_entity {
 	cpBody *body;
 	cpCircleShape *circle;
 
-	khash_t(physics_entity_contact_map) contact_map;
+	zsys<physics_entity_contact> contacts;
 } physics_entity_t;
 
 typedef struct physics : zsys<physics_entity, PHYSICS_MAX_ENTITIES> {
@@ -45,6 +47,8 @@ typedef struct physics : zsys<physics_entity, PHYSICS_MAX_ENTITIES> {
 	void add(const physics_entity &);
 	void del(id);
 	void update(float dt);
+
+	physics_entity *query_ray(const glm::vec2 &start, const glm::vec2 &end, float radius) const;
 } physics_t;
 
 #endif

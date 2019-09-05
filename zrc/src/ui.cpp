@@ -1,4 +1,4 @@
-#include <ui.h>
+#include <ui.hpp>
 #include <stdio.h>
 #include <assert.h>
 
@@ -54,7 +54,7 @@ ui::ui() {
 	//glfwWindowHint(GLFW_RED_BITS, 32);
 	//glfwWindowHint(GLFW_GREEN_BITS, 32);
 	//glfwWindowHint(GLFW_BLUE_BITS, 32);
-	glfwWindowHint(GLFW_SAMPLES, 4);
+	//glfwWindowHint(GLFW_SAMPLES, 4);
 
 	window = glfwCreateWindow(1920/2, 1080/2, "zen rat city", NULL, NULL);
 
@@ -97,7 +97,35 @@ void ui::update() {
 	}
 
 	glfwGetCursorPos(window, &pointer.x, &pointer.y);
+	pointer.y = window_size.y - pointer.y;
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
+}
+
+ui_state ui::button(int button) const {
+	const int *buttons, *prev_buttons;
+	if (button < GLFW_MOUSE_BUTTON_LAST) {
+		buttons = mouse_buttons;
+		prev_buttons = prev_mouse_buttons;
+	} else {
+		buttons = keys;
+		prev_buttons = prev_keys;
+	}
+
+	ui_state state = UI_INVALID;
+	if (buttons[button]) {
+		if (prev_buttons[button]) {
+			state = UI_DOWN;
+		} else {
+			state = UI_PRESSED;
+		}
+	} else {
+		if (prev_buttons[button]) {
+			state = UI_RELEASED;
+		} else {
+			state = UI_UP;
+		}
+	}
+	return state;
 }

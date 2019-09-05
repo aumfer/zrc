@@ -1,4 +1,4 @@
-#include <moving_average.h>
+#include <moving_average.hpp>
 #include <stdlib.h>
 
 void moving_average::update(float value) {

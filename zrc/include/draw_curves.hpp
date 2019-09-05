@@ -2,10 +2,10 @@
 #define _DRAW_CURVES_H_
 
 #include <lsgl.h>
-#include <curves.h>
-#include <ui.h>
-#include <map.h>
-#include <camera.h>
+#include <curves.hpp>
+#include <ui.hpp>
+#include <map.hpp>
+#include <camera.hpp>
 
 typedef struct draw_curves {
 	GLuint vertex_shader;

@@ -2,8 +2,8 @@
 #define _VISUAL_H_
 
 #include <zsys.hpp>
-#include <physics.h>
-#include <lsm.h>
+#include <physics.hpp>
+#include <lsm.hpp>
 #include <color.h>
 
 #define VISUAL_ENTITY_POINTS 8
@@ -15,6 +15,7 @@ typedef struct visual_entity {
 	glm::vec2 position;
 	float angle;
 	glm::vec2 front;
+	glm::vec2 velocity;
 	glm::mat4 transform;
 	glm::vec2 mins;
 	glm::vec2 maxs;

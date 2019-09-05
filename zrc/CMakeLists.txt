@@ -1,52 +1,51 @@
 add_executable(zrc
-    include/camera_control.h
-    src/camera_control.cpp
-    include/camera.h
+    include/camera.hpp
     src/camera.cpp
     include/color.h
-    src/color.cpp
-    include/curves_map.h
+    src/color.c
+    include/control.hpp
+    src/control.cpp
+    include/curves_map.hpp
     src/curves_map.cpp
-    include/curves.h
+    include/curves.hpp
     src/curves.cpp
-    include/draw_curves_map.h
+    include/draw_curves_map.hpp
     src/draw_curves_map.cpp
-    include/draw_curves.h
+    include/draw_curves.hpp
     src/draw_curves.cpp
-    include/draw_map.h
+    include/draw_map.hpp
     src/draw_map.cpp
     include/draw_spines.hpp
     src/draw_spines.cpp
-    include/font.h
+    include/font.hpp
     src/font.cpp
-    include/fsq.h
+    include/fsq.hpp
     src/fsq.cpp
     include/GL/gl3w.h
     src/GL/gl3w.c
-    include/hash.h
-    include/id.h
+    include/id.hpp
     src/id.cpp
     include/lsgl.h
-    src/lsgl.cpp
-    include/lsm.h
+    src/lsgl.c
+    include/lsm.hpp
     src/lsm.cpp
     src/main.cpp
-    include/map.h
+    include/map.hpp
     src/map.cpp
-    include/moving_average.h
+    include/moving_average.hpp
     src/moving_average.cpp
     src/par_streamlines.c
-    include/physics.h
+    include/physics.hpp
     src/physics.cpp
     include/spines.hpp
     src/spines.cpp
-    include/timer.h
+    include/timer.hpp
     src/timer.cpp
-    include/ui.h
+    include/ui.hpp
     src/ui.cpp
-    include/visual.h
+    include/visual.hpp
     src/visual.cpp
-    include/zrc.h
+    include/zrc.hpp
     src/zrc.cpp
     include/zsys.hpp
     src/zsys.cpp

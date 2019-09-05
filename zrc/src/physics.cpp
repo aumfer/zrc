@@ -1,4 +1,4 @@
-#include <physics.h>
+#include <physics.hpp>
 #include <assert.h>
 
 static void physics_store(const physics_entity_t &);
@@ -71,6 +71,16 @@ void physics::update(float dt) {
 	});
 }
 
+physics_entity *physics::query_ray(const glm::vec2 &start, const glm::vec2 &end, float radius) const {
+	cpSegmentQueryInfo info;
+	cpShape *shape = cpSpaceSegmentQueryFirst(space, cpv(start.x, start.y), cpv(end.x, end.y), radius, CP_SHAPE_FILTER_ALL, &info);
+	if (shape) {
+		physics_entity *e = (physics_entity *)cpShapeGetUserData(shape);
+		return e;
+	}
+	return nullptr;
+}
+
 static void physics_store(const physics_entity_t &e) {
 	cpBodySetPosition(e.body, cpv(e.position.x, e.position.y));
 	cpBodySetAngle(e.body, e.angle);
@@ -122,9 +132,11 @@ static cpBool physics_collision_begin_func(cpArbiter *arb, cpSpace *space, cpDat
 	physics_entity_t *e2 = (physics_entity_t *)cpShapeGetUserData(s2);
 
 	if (e1 && e2) {
-		int absent1, absent2;
-		kh_put(physics_entity_contact_map, &e1->contact_map, e2->id, &absent1);
-		kh_put(physics_entity_contact_map, &e2->contact_map, e1->id, &absent2);
+		physics_entity_contact contact1, contact2;
+		contact1.id = e2->id;
+		e1->contacts.add(contact1);
+		contact2.id = e1->id;
+		e2->contacts.add(contact2);
 	}
 
 	cpBool respond = e1->response_mask & e2->response_mask;
@@ -138,9 +150,7 @@ static void physics_collision_separate_func(cpArbiter *arb, cpSpace *space, cpDa
 	physics_entity_t *e2 = (physics_entity_t *)cpShapeGetUserData(s2);
 
 	if (e1 && e2) {
-		khint_t k1 = kh_get(physics_entity_contact_map, &e1->contact_map, e2->id);
-		khint_t k2 = kh_get(physics_entity_contact_map, &e2->contact_map, e1->id);
-		kh_del(physics_entity_contact_map, &e1->contact_map, k1);
-		kh_del(physics_entity_contact_map, &e2->contact_map, k2);
+		e1->contacts.del(e2->id);
+		e2->contacts.del(e1->id);
 	}
 }

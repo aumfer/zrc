@@ -2,6 +2,7 @@ GLSL(
     
 //==========================================================================================
 // distance
+// https://www.shadertoy.com/view/4dfXDn
 //==========================================================================================
 
 vec2 sdTranslate(vec2 p, vec2 t) {
@@ -79,7 +80,8 @@ float sdSegmentSq(in vec2 p, in vec2 a, in vec2 b) {
 	return length2(pa - ba * h);
 }
 
-vec2 udBezierSq(vec2 p0, vec2 p1, vec2 p2, in vec2 p3, vec2 pos) {
+// cubic
+vec2 udBezierSq(vec2 pos, vec2 p0, vec2 p1, vec2 p2, in vec2 p3) {
 	const int kNum = 50;
 	vec2 res = vec2(1e10, 0.0);
 	vec2 a = p0;
@@ -96,6 +98,7 @@ vec2 udBezierSq(vec2 p0, vec2 p1, vec2 p2, in vec2 p3, vec2 pos) {
 	return vec2(res.x, res.y);
 }
 
+// quadratic
 float sdBezierSq(in vec2 pos, in vec2 A, in vec2 B, in vec2 C)
 {
 	vec2 a = B - A;

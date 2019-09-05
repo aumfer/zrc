@@ -1,7 +1,7 @@
 #ifndef _MAP_H_
 #define _MAP_H_
 
-#include <lsm.h>
+#include <lsm.hpp>
 #include <zsys.hpp>
 
 #define WORLD_SIZE (1024*2)
@@ -16,8 +16,6 @@
 typedef struct map_entity {
 	glm::ivec2 coord;
 } map_entity_t;
-
-KHASH_INIT(map_map, id_t, map_entity_t, 1, id_hash_func, id_hash_equal)
 
 typedef struct map : zsys<map_entity> {
 	map();

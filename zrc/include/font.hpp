@@ -2,8 +2,8 @@
 #define _FONT_H_
 
 #include <lsgl.h>
-#include <ui.h>
-#include <lsm.h>
+#include <ui.hpp>
+#include <lsm.hpp>
 
 typedef enum font_style {
 	FONT_ARIAL_16,

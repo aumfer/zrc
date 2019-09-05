@@ -1,4 +1,4 @@
-#include <font.h>
+#include <font.hpp>
 #include <fonts/arial-16.h>
 #include <fonts/consolas-16.h>
 #include <assert.h>

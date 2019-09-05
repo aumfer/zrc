@@ -1,6 +1,6 @@
-#include <visual.h>
+#include <visual.hpp>
 #include <assert.h>
-#include <lsm.h>
+#include <lsm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 visual::visual() {
@@ -29,6 +29,8 @@ void visual::update(physics &physics, float dt) {
 		visual_entity.angle = angle;
 		cpVect front = cpvforangle(angle);
 		visual_entity.front = glm::vec2((float)front.x, (float)front.y);
+
+		visual_entity.velocity = physics_entity->velocity;
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0));
 		transform = glm::rotate(transform, angle, glm::vec3(0, 0, 1));

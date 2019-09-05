@@ -1,4 +1,4 @@
-#include <draw_curves_map.h>
+#include <draw_curves_map.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 static GLchar vertex_src[] = GLSL_BEGIN

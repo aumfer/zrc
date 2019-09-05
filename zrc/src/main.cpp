@@ -1,4 +1,4 @@
-#include <zrc.h>
+#include <zrc.hpp>
 #include <tinycthread.h>
 #include <color.h>
 

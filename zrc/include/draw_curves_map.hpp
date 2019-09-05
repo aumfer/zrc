@@ -2,8 +2,8 @@
 #define _DRAW_CURVES_MAP_H_
 
 #include <lsgl.h>
-#include <curves.h>
-#include <curves_map.h>
+#include <curves.hpp>
+#include <curves_map.hpp>
 
 typedef struct draw_curves_map {
 	GLuint vertex_shader;

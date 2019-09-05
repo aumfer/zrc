@@ -1,4 +1,4 @@
-#include <draw_map.h>
+#include <draw_map.hpp>
 
 static GLchar vertex_src[] = GLSL_BEGIN
 #include <shaders/util.glsl>
@@ -56,7 +56,7 @@ void main() {
 	//uvec4 gcounts = textureGather(counts, vec2(map_coord) / textureSize(counts, 0));
 
 	uint max_count = 0;
-	
+	/*
 	const int RANGE = 0;
 	uint sum = 0;
 	for (int x = map_coord.x - RANGE; x <= map_coord.x + RANGE; ++x) {
@@ -91,7 +91,7 @@ void main() {
 	}
 	color /= vec3(9);
 	//color += vec3(float(sum) / 9.0);
-	
+	*/
 
 	float d = 1e10;
 	//d = min(d, grid_line((v_position + map_scale / 2) / map_scale) * map_scale);
@@ -100,8 +100,8 @@ void main() {
 	//d -= 1;
 	//d = max(0, d);
 
-	color += rgb(25, 25, 25);
-	color += vec3(hash1(v_position)) * 0.05;
+	color += rgb(3, 3, 3);
+	color += vec3(hash1(v_position)) * 0.01;
 	color += rgb(100, 149, 237) * fill2(d) * 0.05;
 
 	if (max_count > 6) {
@@ -141,6 +141,8 @@ draw_map::~draw_map() {
 void draw_map::update(const ui &ui, const camera &camera, const curves_map &curves_map, const curves &curves) {
 	glm::mat4 projection = camera.projection;
 
+	glEnable(GL_FRAMEBUFFER_SRGB);
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, curves_map.tile_texture);
 	glActiveTexture(GL_TEXTURE1);
@@ -161,4 +163,6 @@ void draw_map::update(const ui &ui, const camera &camera, const curves_map &curv
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+	glDisable(GL_FRAMEBUFFER_SRGB);
 }

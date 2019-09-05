@@ -1,11 +1,11 @@
 #ifndef _DRAW_H_
 #define _DRAW_H_
 
-#include <fsq.h>
-#include <ui.h>
-#include <camera.h>
-#include <curves_map.h>
-#include <curves.h>
+#include <fsq.hpp>
+#include <ui.hpp>
+#include <camera.hpp>
+#include <curves_map.hpp>
+#include <curves.hpp>
 
 typedef struct draw_map {
 	fsq_t fsq;

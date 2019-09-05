@@ -1,4 +1,4 @@
-#include <fsq.h>
+#include <fsq.hpp>
 
 static GLbyte vertices[] = {
 	SCHAR_MIN, SCHAR_MIN,
