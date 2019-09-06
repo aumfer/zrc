@@ -11,6 +11,7 @@ typedef struct camera {
 
 	glm::mat4 view;
 	glm::mat4 projection;
+	glm::mat4 view_projection;
 
 	void update(const ui &);
 } camera_t;

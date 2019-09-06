@@ -12,11 +12,10 @@
 #include <draw_curves.hpp>
 #include <camera.hpp>
 #include <visual.hpp>
-#include <curves_map.hpp>
-#include <draw_curves_map.hpp>
 #include <control.hpp>
 #include <spines.hpp>
 #include <draw_spines.hpp>
+#include <flight.hpp>
 
 typedef struct zrc {
 	timer update_timer;
@@ -31,11 +30,10 @@ typedef struct zrc {
 	draw_curves draw_curves;
 	camera camera;
 	visual visual;
-	curves_map curves_map;
-	draw_curves_map draw_curves_map;
 	control control;
 	spines spines;
 	draw_spines draw_spines;
+	flight flight;
 
 	float accumulator;
 

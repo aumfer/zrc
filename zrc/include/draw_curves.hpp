@@ -15,7 +15,7 @@ typedef struct draw_curves {
 	struct {
 		GLint random_seed;
 		GLint resolution;
-		GLint projection;
+		GLint view_projection;
 	} uniforms;
 
 	draw_curves();

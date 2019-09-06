@@ -5,18 +5,16 @@ add_executable(zrc
     src/color.c
     include/control.hpp
     src/control.cpp
-    include/curves_map.hpp
-    src/curves_map.cpp
     include/curves.hpp
     src/curves.cpp
-    include/draw_curves_map.hpp
-    src/draw_curves_map.cpp
     include/draw_curves.hpp
     src/draw_curves.cpp
     include/draw_map.hpp
     src/draw_map.cpp
     include/draw_spines.hpp
     src/draw_spines.cpp
+    include/flight.hpp
+    src/flight.cpp
     include/font.hpp
     src/font.cpp
     include/fsq.hpp

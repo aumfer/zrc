@@ -9,7 +9,7 @@ typedef struct draw_spines {
 	GLuint vertex_array;
 
 	struct {
-		GLint projection;
+		GLint view_projection;
 	} uniforms;
 	struct {
 		GLint position, annotations;

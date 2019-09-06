@@ -4,7 +4,7 @@ static GLchar vertex_src[] = GLSL_BEGIN
 #include <shaders/util.glsl>
 #include <shaders/curves.glsl>
 GLSL(
-uniform mat4 projection;
+uniform mat4 view_projection;
 
 layout(location = 0) in vec2 position;
 
@@ -18,7 +18,7 @@ void main() {
 	mat4 transform = instance.transform;
 	vec4 p = transform * vec4(position, 0, 1);
 	v_position = p.xy;
-	gl_Position = projection * p;
+	gl_Position = view_projection * p;
 });
 
 static GLchar fragment_src[] = GLSL_BEGIN
@@ -111,14 +111,14 @@ draw_curves::draw_curves() {
 	glUseProgram(program);
 	uniforms.random_seed = glGetUniformLocation(program, "random_seed");
 	uniforms.resolution = glGetUniformLocation(program, "resolution");
-	uniforms.projection = glGetUniformLocation(program, "projection");
+	uniforms.view_projection = glGetUniformLocation(program, "view_projection");
 	glUseProgram(0);
 }
 draw_curves::~draw_curves() {
 }
 
 void draw_curves::update(curves &curves, const ui &ui, const camera &camera) {
-	glm::mat4 projection = camera.projection;
+	glm::mat4 view_projection = camera.view_projection;
 
 	glEnable(GL_FRAMEBUFFER_SRGB);
 
@@ -129,7 +129,7 @@ void draw_curves::update(curves &curves, const ui &ui, const camera &camera) {
 	glUseProgram(program);
 	glUniform4ui(uniforms.random_seed, rand(), rand(), rand(), rand());
 	glUniform2i(uniforms.resolution, ui.framebuffer_size.x, ui.framebuffer_size.y);
-	glUniformMatrix4fv(uniforms.projection, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(uniforms.view_projection, 1, GL_FALSE, glm::value_ptr(view_projection));
 
 	curves.begin();
 	curves.draw();

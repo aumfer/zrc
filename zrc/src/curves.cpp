@@ -40,6 +40,7 @@ void curves::update(const visual &visual, const control &control) {
 		instances[instance_count].color = visual_entity.color;
 		instances[instance_count].transform = visual_entity.transform;
 		instances[instance_count].velocity = visual_entity.velocity;
+		instances[instance_count].angular_velocity = visual_entity.angular_velocity;
 
 		for (int i = 0; i < CURVES_POINTS; ++i) {
 			glm::vec4 p = visual_entity.transform * glm::vec4(visual_entity.points[i], 0, 1);

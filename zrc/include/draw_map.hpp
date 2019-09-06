@@ -4,7 +4,6 @@
 #include <fsq.hpp>
 #include <ui.hpp>
 #include <camera.hpp>
-#include <curves_map.hpp>
 #include <curves.hpp>
 
 typedef struct draw_map {
@@ -17,14 +16,15 @@ typedef struct draw_map {
 	struct {
 		GLint random_seed;
 		GLint resolution;
-		GLint projection;
+		GLint view_projection;
+		GLint inv_view_projection;
 		GLint map_scale;
 	} uniforms;
 
 	draw_map();
 	~draw_map();
 
-	void update(const ui &, const camera &, const curves_map&, const curves &);
+	void update(const ui &, const camera &, const curves &);
 } draw_map_t;
 
 

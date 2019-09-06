@@ -16,6 +16,7 @@ typedef struct visual_entity {
 	float angle;
 	glm::vec2 front;
 	glm::vec2 velocity;
+	float angular_velocity;
 	glm::mat4 transform;
 	glm::vec2 mins;
 	glm::vec2 maxs;

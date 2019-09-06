@@ -3,7 +3,7 @@
 static GLchar vertex_src[] = GLSL_BEGIN
 #include <shaders/util.glsl>
 GLSL(
-uniform mat4 projection;
+uniform mat4 view_projection;
 
 layout(location = 0) in vec2 position;
 layout(location = 1) in vec4 annotations;
@@ -16,7 +16,7 @@ void main() {
 	v_annotations = annotations;
 
 	vec4 p = vec4(position, 0, 1);
-	gl_Position = projection * p;
+	gl_Position = view_projection * p;
 });
 
 static GLchar fragment_src[] = GLSL_BEGIN
@@ -51,7 +51,7 @@ draw_spines::draw_spines() {
 	lsgl_linkprogram(program);
 
 	glUseProgram(program);
-	uniforms.projection = glGetUniformLocation(program, "projection");
+	uniforms.view_projection = glGetUniformLocation(program, "view_projection");
 	attributes.position = glGetAttribLocation(program, "position");
 	attributes.annotations = glGetAttribLocation(program, "annotations");
 	glUseProgram(0);
@@ -80,12 +80,11 @@ void draw_spines::update(const spines &spines, const ui &ui, const camera &camer
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	//glm::mat4 projection = glm::ortho(0.0f, (float)ui.framebuffer_size.x, 0.0f, (float)ui.framebuffer_size.y);
-	glm::mat4 projection = camera.projection;
+	glm::mat4 view_projection = camera.view_projection;
 	glViewport(0, 0, ui.framebuffer_size.x, ui.framebuffer_size.y);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, spines.index_buffer);
-	glUniformMatrix4fv(uniforms.projection, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(uniforms.view_projection, 1, GL_FALSE, glm::value_ptr(view_projection));
 	glDrawElements(GL_TRIANGLES, spines.spine_list.num_vertices, GL_UNSIGNED_INT, NULL);
 
 	glUseProgram(0);

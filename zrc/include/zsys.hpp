@@ -29,6 +29,21 @@ struct zsys {
 	const E *get(id id) const {
 		return &map.find(id)->second;
 	}
+	
+	template<typename R>
+	void get(id id, const R &receiver) {
+		E *e = get(id);
+		if (e) {
+			receiver(*e);
+		}
+	}
+	template<typename R>
+	void get(id id, const R &receiver) const {
+		const E *e = get(id);
+		if (e) {
+			receiver(*e);
+		}
+	}
 
 	template<typename R>
 	void foreach(const R& receiver) {

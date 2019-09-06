@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 		physics_entity.collide_flags = CP_ALL_CATEGORIES;
 		physics_entity.collide_mask = CP_ALL_CATEGORIES;
 		physics_entity.response_mask = CP_ALL_CATEGORIES;
-		physics_entity.radius = glm::linearRand<float>(1, 10);
+		physics_entity.radius = glm::linearRand<float>(0.05f, 12.5f);
 		//physics_entity//.radius = 0.5f;
 		physics_entity.position = glm::linearRand(glm::vec2(0), glm::vec2(WORLD_SIZE));
 		physics_entity.angle = glm::linearRand<float>(0, glm::pi<float>() * 2);
@@ -29,6 +29,14 @@ int main(int argc, char **argv) {
 		visual_entity.id = id;
 		color_random(glm::value_ptr(visual_entity.color), 255);
 		game.visual.add(visual_entity);
+
+		flight_entity flight_entity = {};
+		flight_entity.id = id;
+		flight_entity.max_thrust = 500;
+		flight_entity.max_turn = 50;
+		flight_entity.linear_damping = 10;
+		flight_entity.angular_damping = 10;
+		game.flight.add(flight_entity);
 	}
 
 	thrd_t update;

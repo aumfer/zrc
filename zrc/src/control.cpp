@@ -1,6 +1,6 @@
 #include <control.hpp>
 
-void control::update(camera &camera, const ui &ui, const physics &physics, float dt) {
+void control::update(camera &camera, const ui &ui, const physics &physics, flight &flight, float dt) {
 	if (ui.keys[GLFW_KEY_LEFT] == GLFW_PRESS) {
 		camera.position.x -= scroll_rate * dt;
 	}
@@ -29,5 +29,27 @@ void control::update(camera &camera, const ui &ui, const physics &physics, float
 
 	if (ui.button(GLFW_MOUSE_BUTTON_1) == UI_RELEASED) {
 		select_entity = hover_entity;
+	}
+
+	if (select_entity != ID_EMPTY) {
+		flight.get(select_entity, [&](flight_entity &flight_entity) {
+			glm::vec2 thrust = glm::vec2();
+			float turn = 0;
+			if (ui.keys[GLFW_KEY_W]) {
+				thrust.y += 1;
+			}
+			if (ui.keys[GLFW_KEY_S]) {
+				thrust.y -= 1;
+			}
+			if (ui.keys[GLFW_KEY_A]) {
+				turn += 1;
+			}
+			if (ui.keys[GLFW_KEY_D]) {
+				turn -= 1;
+			}
+
+			flight_entity.thrust = thrust;
+			flight_entity.turn = turn;
+		});
 	}
 }

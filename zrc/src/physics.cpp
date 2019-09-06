@@ -25,7 +25,8 @@ void physics::add(const physics_entity &create) {
 
 	//cpFloat mass = physics_entity.radius * physics_entity.radius;
 	cpFloat mass = 1;
-	cpFloat moment = cpMomentForCircle(mass, 0, physics_entity.radius*2, cpvzero);
+	//cpFloat moment = cpMomentForCircle(mass, 0, physics_entity.radius*2, cpvzero);
+	cpFloat moment = 1;
 	physics_entity.body = cpBodyAlloc();
 	cpBodyInit(physics_entity.body, mass, moment);
 	cpBodySetType(physics_entity.body, physics_entity.type);

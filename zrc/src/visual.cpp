@@ -11,7 +11,7 @@ visual::~visual() {
 void visual::add(const visual_entity &create) {
 	visual_entity visual_entity = create;
 	for (int i = 0; i < VISUAL_ENTITY_POINTS; ++i) {
-		visual_entity.points[i] = glm::linearRand(glm::vec2(-1), glm::vec2(1));
+		visual_entity.points[i] = glm::circularRand(1.0f);
 	}
 	zsys::add(visual_entity);
 }
@@ -30,7 +30,8 @@ void visual::update(physics &physics, float dt) {
 		cpVect front = cpvforangle(angle);
 		visual_entity.front = glm::vec2((float)front.x, (float)front.y);
 
-		visual_entity.velocity = physics_entity->velocity;
+		visual_entity.velocity = physics_entity->velocity + physics_entity->force * dt;
+		visual_entity.angular_velocity = physics_entity->angular_velocity + physics_entity->torque * dt;
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0));
 		transform = glm::rotate(transform, angle, glm::vec3(0, 0, 1));
