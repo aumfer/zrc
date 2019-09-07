@@ -9,8 +9,7 @@ int main(int argc, char **argv) {
 		id_t id;
 		id_create(&id);
 
-		physics_entity_t physics_entity = {};
-		physics_entity.id = id;
+		physics_entity_t physics_entity = { id };
 		physics_entity.type = CP_BODY_TYPE_DYNAMIC;
 		physics_entity.collide_flags = CP_ALL_CATEGORIES;
 		physics_entity.collide_mask = CP_ALL_CATEGORIES;
@@ -24,19 +23,27 @@ int main(int argc, char **argv) {
 		physics_entity.force = glm::linearRand(glm::vec2(-1000), glm::vec2(1000));
 		physics_entity.torque = glm::linearRand<float>(-1000, 1000);
 		game.physics.add(physics_entity);
+
+		map_entity_t map_entity = { id };
+		game.map.add(map_entity);
 		
-		visual_entity_t visual_entity = {};
-		visual_entity.id = id;
+		visual_entity_t visual_entity = { id };
 		color_random(glm::value_ptr(visual_entity.color), 255);
 		game.visual.add(visual_entity);
 
-		flight_entity flight_entity = {};
-		flight_entity.id = id;
+		flight_entity flight_entity = { id };
 		flight_entity.max_thrust = 500;
 		flight_entity.max_turn = 50;
 		flight_entity.linear_damping = 10;
 		flight_entity.angular_damping = 10;
 		game.flight.add(flight_entity);
+
+		locomotion_entity locomotion_entity = { id };
+		game.locomotion.add(locomotion_entity);
+		
+		seek_entity seek_entity = { id };
+		seek_entity.to = glm::linearRand(glm::vec2(0), glm::vec2(WORLD_SIZE));
+		game.seek.add(seek_entity);
 	}
 
 	thrd_t update;

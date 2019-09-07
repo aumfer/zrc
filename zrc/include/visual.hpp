@@ -8,6 +8,9 @@
 
 #define VISUAL_ENTITY_POINTS 8
 
+#define VISUAL_FLAGS_NONE 0
+#define VISUAL_FLAGS_SELECTED 1
+
 typedef struct visual_entity {
 	id_t id;
 	glm::u8vec4 color;
@@ -22,6 +25,7 @@ typedef struct visual_entity {
 	glm::vec2 maxs;
 
 	glm::vec2 points[VISUAL_ENTITY_POINTS];
+	unsigned flags;
 } visual_entity_t;
 
 typedef struct visual : zsys<visual_entity> {

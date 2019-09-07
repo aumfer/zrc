@@ -23,6 +23,8 @@ add_executable(zrc
     src/GL/gl3w.c
     include/id.hpp
     src/id.cpp
+    include/locomotion.hpp
+    src/locomotion.cpp
     include/lsgl.h
     src/lsgl.c
     include/lsm.hpp
@@ -35,6 +37,8 @@ add_executable(zrc
     src/par_streamlines.c
     include/physics.hpp
     src/physics.cpp
+    include/seek.hpp
+    src/seek.cpp
     include/spines.hpp
     src/spines.cpp
     include/timer.hpp
@@ -45,6 +49,8 @@ add_executable(zrc
     src/visual.cpp
     include/zrc.hpp
     src/zrc.cpp
+    include/zset.hpp
+    src/zset.cpp
     include/zsys.hpp
     src/zsys.cpp
 )

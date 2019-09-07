@@ -47,9 +47,9 @@ void curves::update(const visual &visual, const control &control) {
 			instances[instance_count].points[i] = p;
 		}
 
-		GLuint flags = CURVES_FLAGS_NONE;
+		GLuint flags = visual_entity.flags;
 		if (visual_entity.id == control.select_entity) {
-			flags |= CURVES_FLAGS_SELECTED;
+			flags |= VISUAL_FLAGS_SELECTED;
 		}
 		instances[instance_count].flags = flags;
 

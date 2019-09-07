@@ -23,6 +23,9 @@ struct zsys {
 	void del(id id) {
 		map.erase(id);
 	}
+	bool has(id id) {
+		return map.find(id) != map.end();
+	}
 	E *get(id id) {
 		return &map.find(id)->second;
 	}

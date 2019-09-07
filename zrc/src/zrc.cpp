@@ -14,9 +14,12 @@ void zrc::update() {
 	accumulator += update_timer.dt;
 	while (accumulator >= TICK_RATE) {
 		accumulator -= TICK_RATE;
+
+		seek.update(physics, locomotion);
+		locomotion.update(physics, flight, TICK_RATE);
 		flight.update(physics);
 		physics.update(TICK_RATE);
-		map.update();
+		map.update(physics);
 	}
 }
 
@@ -26,7 +29,7 @@ void zrc::draw() {
 	draw_timer.update();
 	fps.update(draw_timer.dt);
 
-	control.update(camera, ui, physics, flight, draw_timer.dt);
+	control.update(camera, ui, physics, map, flight, draw_timer.dt);
 
 	camera.update(ui);
 	visual.update(physics, accumulator);

@@ -1,6 +1,6 @@
 #include <control.hpp>
 
-void control::update(camera &camera, const ui &ui, const physics &physics, flight &flight, float dt) {
+void control::update(camera &camera, const ui &ui, const physics &physics, const map &map, flight &flight, float dt) {
 	if (ui.keys[GLFW_KEY_LEFT] == GLFW_PRESS) {
 		camera.position.x -= scroll_rate * dt;
 	}
@@ -50,6 +50,26 @@ void control::update(camera &camera, const ui &ui, const physics &physics, fligh
 
 			flight_entity.thrust = thrust;
 			flight_entity.turn = turn;
+		});
+
+		physics.get(select_entity, [&](const physics_entity &physics_entity) {
+			int found = 0;
+			map.query_point(physics_entity.position, 64, [&](id id) {
+				if (id != physics_entity.id) {
+					++found;
+				}
+			});
+			int found2 = 0;
+			physics.query_point(physics_entity.position, 64, [&](const physics_entity_t &near_entity) {
+				if (near_entity.id != physics_entity.id) {
+					++found2;
+				}
+			});
+			physics.query_ray(physics_entity.position, physics_entity.position + physics_entity.velocity, 1, [&](const physics_entity_t &near_entity, const glm::vec2 &point) {
+			});
+			if (found || found2) {
+				printf("found %d %d\n", found, found2);
+			}
 		});
 	}
 }

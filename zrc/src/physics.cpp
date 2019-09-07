@@ -82,6 +82,16 @@ physics_entity *physics::query_ray(const glm::vec2 &start, const glm::vec2 &end,
 	return nullptr;
 }
 
+physics_entity *physics::query_point(const glm::vec2 &p, float max_distance) const {
+	cpPointQueryInfo info;
+	cpShape *shape = cpSpacePointQueryNearest(space, cpv(p.x, p.y), max_distance, CP_SHAPE_FILTER_ALL, &info);
+	if (shape) {
+		physics_entity *e = (physics_entity *)cpShapeGetUserData(shape);
+		return e;
+	}
+	return nullptr;
+}
+
 static void physics_store(const physics_entity_t &e) {
 	cpBodySetPosition(e.body, cpv(e.position.x, e.position.y));
 	cpBodySetAngle(e.body, e.angle);
@@ -133,11 +143,8 @@ static cpBool physics_collision_begin_func(cpArbiter *arb, cpSpace *space, cpDat
 	physics_entity_t *e2 = (physics_entity_t *)cpShapeGetUserData(s2);
 
 	if (e1 && e2) {
-		physics_entity_contact contact1, contact2;
-		contact1.id = e2->id;
-		e1->contacts.add(contact1);
-		contact2.id = e1->id;
-		e2->contacts.add(contact2);
+		e1->contacts.add(e2->id);
+		e2->contacts.add(e1->id);
 	}
 
 	cpBool respond = e1->response_mask & e2->response_mask;

@@ -16,6 +16,8 @@
 #include <spines.hpp>
 #include <draw_spines.hpp>
 #include <flight.hpp>
+#include <locomotion.hpp>
+#include <seek.hpp>
 
 typedef struct zrc {
 	timer update_timer;
@@ -34,6 +36,8 @@ typedef struct zrc {
 	spines spines;
 	draw_spines draw_spines;
 	flight flight;
+	locomotion locomotion;
+	seek seek;
 
 	float accumulator;
 

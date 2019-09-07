@@ -4,7 +4,9 @@
 #include <camera.hpp>
 #include <ui.hpp>
 #include <physics.hpp>
+#include <map.hpp>
 #include <flight.hpp>
+#include <visual.hpp>
 
 typedef struct control {
 	const float ZOOM_DEFAULT = 512;
@@ -17,7 +19,7 @@ typedef struct control {
 	id hover_entity;
 	id select_entity;
 
-	void update(camera &, const ui &, const physics &, flight &, float dt);
+	void update(camera &, const ui &, const physics &, const map &, flight &, float dt);
 } control_t;
 
 #endif

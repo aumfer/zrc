@@ -11,9 +11,9 @@ void flight::update(physics &physics) {
 	foreach([&](flight_entity &flight_entity) {
 		physics.get(flight_entity.id, [&](physics_entity &physics_entity) {
 			glm::vec2 thrust = flight_entity.thrust;
-			//thrust.y = glm::max(0.0f, thrust.y); // no reverse
-			float thrust_l2 = glm::length2(thrust);
-			if (thrust_l2 > 1) {
+			thrust.y = glm::max(0.0f, thrust.y); // no reverse
+			float speed2 = glm::length2(thrust);
+			if (speed2 > 1) {
 				thrust = glm::normalize(thrust);
 			}
 			thrust = glm::rotate(thrust, physics_entity.angle);

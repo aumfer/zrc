@@ -10,9 +10,6 @@
 
 #define CURVES_POINTS VISUAL_ENTITY_POINTS
 
-#define CURVES_FLAGS_NONE 0
-#define CURVES_FLAGS_SELECTED 1
-
 typedef struct curves_instance {
 	glm::vec2 position;
 	GLfloat radius;
@@ -25,9 +22,6 @@ typedef struct curves_instance {
 } curves_instance_t;
 
 #define CURVES_INSTANCE_BINDING 0
-
-#define CURVES_MAX_SPLINES 16384
-#define CURVES_MAX_VERTICES (CURVES_MAX_SPLINES*16)
 
 typedef struct curves {
 	curves();
