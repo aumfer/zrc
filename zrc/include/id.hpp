@@ -5,6 +5,9 @@ typedef struct id {
     int a, b, c, d;
 } id_t;
 
+typedef char name[sizeof(id)];
+typedef name name_t;
+
 const id ID_EMPTY = {};
 
 constexpr int id_hash_func(id id) {

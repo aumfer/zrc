@@ -13,11 +13,14 @@ struct zsys {
 			map.reserve(MAX_ENTITIES);
 		}
 	}
+	//zsys(const zsys&) = delete;
+	zsys& operator=(const zsys&) = delete;
 
 	E &add(const E &e) {
 		assert(!MAX_ENTITIES || map.size() < MAX_ENTITIES);
 
-		auto i = map.insert({ e.id, e });
+		auto p = std::make_pair(e.id, std::move(e));
+		auto i = map.emplace(p);
 		return i.first->second;
 	}
 	void del(id id) {
@@ -25,6 +28,9 @@ struct zsys {
 	}
 	bool has(id id) {
 		return map.find(id) != map.end();
+	}
+	void clear() {
+		map.clear();
 	}
 	E *get(id id) {
 		return &map.find(id)->second;

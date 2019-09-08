@@ -1,9 +1,6 @@
 [submodule "chipmunk/Chipmunk2D"]
 	path = chipmunk/Chipmunk2D
 	url = https://github.com/slembcke/Chipmunk2D
-[submodule "klib/klib"]
-	path = klib/klib
-	url = https://github.com/attractivechaos/klib
 [submodule "glfw/glfw"]
 	path = glfw/glfw
 	url = https://github.com/glfw/glfw
@@ -16,3 +13,6 @@
 [submodule "par/par"]
 	path = par/par
 	url = https://github.com/prideout/par
+[submodule "vector/Vector"]
+	path = vector/Vector
+	url = https://github.com/blucz/Vector

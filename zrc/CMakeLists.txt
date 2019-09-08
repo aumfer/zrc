@@ -1,6 +1,10 @@
 add_executable(zrc
+    include/ability.hpp
+    src/ability.cpp
     include/camera.hpp
     src/camera.cpp
+    include/caster.hpp
+    src/caster.cpp
     include/color.h
     src/color.c
     include/control.hpp
@@ -9,6 +13,8 @@ add_executable(zrc
     src/curves.cpp
     include/draw_curves.hpp
     src/draw_curves.cpp
+    include/draw_lines.hpp
+    src/draw_lines.cpp
     include/draw_map.hpp
     src/draw_map.cpp
     include/draw_spines.hpp
@@ -19,10 +25,10 @@ add_executable(zrc
     src/font.cpp
     include/fsq.hpp
     src/fsq.cpp
-    include/GL/gl3w.h
-    src/GL/gl3w.c
     include/id.hpp
     src/id.cpp
+    include/life.hpp
+    src/life.cpp
     include/locomotion.hpp
     src/locomotion.cpp
     include/lsgl.h
@@ -39,6 +45,8 @@ add_executable(zrc
     src/physics.cpp
     include/seek.hpp
     src/seek.cpp
+    include/sense.hpp
+    src/sense.cpp
     include/spines.hpp
     src/spines.cpp
     include/timer.hpp
@@ -59,10 +67,11 @@ target_include_directories(zrc PUBLIC include)
 target_include_directories(zrc PRIVATE src)
 
 target_link_libraries(zrc PUBLIC chipmunk_static)
+target_link_libraries(zrc PUBLIC gl3w)
 target_link_libraries(zrc PUBLIC glfw)
 target_link_libraries(zrc PUBLIC glm)
-target_link_libraries(zrc PUBLIC klib)
 target_link_libraries(zrc PUBLIC par)
 target_link_libraries(zrc PUBLIC tinycthread)
+target_link_libraries(zrc PUBLIC vector)
 
 set_target_properties(zrc PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")

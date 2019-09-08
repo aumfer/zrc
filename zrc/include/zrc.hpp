@@ -18,6 +18,10 @@
 #include <flight.hpp>
 #include <locomotion.hpp>
 #include <seek.hpp>
+#include <sense.hpp>
+#include <ability.hpp>
+#include <caster.hpp>
+#include <draw_lines.hpp>
 
 typedef struct zrc {
 	timer update_timer;
@@ -38,6 +42,10 @@ typedef struct zrc {
 	flight flight;
 	locomotion locomotion;
 	seek seek;
+	sense sense;
+	ability ability;
+	caster caster;
+	draw_lines draw_lines;
 
 	float accumulator;
 

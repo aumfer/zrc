@@ -603,7 +603,7 @@ float fill2(float d) {
 
 float grid_line(vec2 p) {
     float d = mincomp(abs(fract(p) - 0.5));
-	return d*d;
+	return d;
 }
 float grid_point(vec2 p) {
 	float d = maxcomp(abs(fract(p) - 0.5));

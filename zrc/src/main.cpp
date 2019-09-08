@@ -5,7 +5,7 @@
 static zrc_t game;
 
 int main(int argc, char **argv) {
-	for (int i = 0; i < 1024; ++i) {
+	for (int i = 0; i < 64; ++i) {
 		id_t id;
 		id_create(&id);
 
@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 		physics_entity.collide_mask = CP_ALL_CATEGORIES;
 		physics_entity.response_mask = CP_ALL_CATEGORIES;
 		physics_entity.radius = glm::linearRand<float>(0.05f, 12.5f);
-		//physics_entity//.radius = 0.5f;
+		//physics_entity.radius = 0.5f;
 		physics_entity.position = glm::linearRand(glm::vec2(0), glm::vec2(WORLD_SIZE));
 		physics_entity.angle = glm::linearRand<float>(0, glm::pi<float>() * 2);
 
@@ -32,8 +32,8 @@ int main(int argc, char **argv) {
 		game.visual.add(visual_entity);
 
 		flight_entity flight_entity = { id };
-		flight_entity.max_thrust = 500;
-		flight_entity.max_turn = 50;
+		flight_entity.max_thrust = 50;
+		flight_entity.max_turn = 5;
 		flight_entity.linear_damping = 10;
 		flight_entity.angular_damping = 10;
 		game.flight.add(flight_entity);
@@ -44,24 +44,35 @@ int main(int argc, char **argv) {
 		seek_entity seek_entity = { id };
 		seek_entity.to = glm::linearRand(glm::vec2(0), glm::vec2(WORLD_SIZE));
 		game.seek.add(seek_entity);
+
+		sense_entity sense_entity = { id };
+		sense_entity.radius = 512;
+		game.sense.add(sense_entity);
+
+		caster_entity_t caster_entity = { id };
+		caster_ability_t blink_ability = { };
+		strcpy(blink_ability.name, "blink");
+		caster_entity.abilities.add(blink_ability);
+		game.caster.add(caster_entity);
 	}
 
-	thrd_t update;
-	thrd_create(&update, [](void *arg) {
-		zrc &game = *(zrc *)arg;
-		do {
-			game.update();
-			thrd_yield();
-		} while (!game.ui.should_close);
-		return 0;
-	}, &game);
+	//thrd_t update;
+	//thrd_create(&update, [](void *arg) {
+	//	zrc &game = *(zrc *)arg;
+	//	do {
+	//		game.update();
+	//		thrd_yield();
+	//	} while (!game.ui.should_close);
+	//	return 0;
+	//}, &game);
 
 	do {
+		game.update();
 		game.draw();
 		thrd_yield();
 	} while (!game.ui.should_close);
 
-	int res;
-	thrd_join(update, &res);
+	//int res;
+	//thrd_join(update, &res);
     return 0;
 }

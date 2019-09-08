@@ -4,6 +4,9 @@
 #include <unordered_set>
 
 struct zset {
+	//zset(const zset&) = delete;
+	zset& operator=(const zset&) = delete;
+
 	void add(id id) {
 		set.insert(id);
 	}
@@ -12,6 +15,9 @@ struct zset {
 	}
 	bool has(id id) {
 		return set.find(id) != set.end();
+	}
+	void clear() {
+		set.clear();
 	}
 
 	template<typename R>

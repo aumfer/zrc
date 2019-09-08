@@ -1,5 +1,6 @@
 #include <physics.hpp>
 #include <assert.h>
+#include <map.hpp>
 
 static void physics_store(const physics_entity_t &);
 static void physics_load(physics_entity_t *);
@@ -9,6 +10,8 @@ static void physics_collision_separate_func(cpArbiter *arb, cpSpace *space, cpDa
 
 physics::physics() {
 	space = cpSpaceNew();
+	//const float LOAD_FACTOR = 0.1f;
+	//cpSpaceUseSpatialHash(space, MAP_SCALE, PHYSICS_MAX_ENTITIES/LOAD_FACTOR);
 	cpSpaceSetUserData(space, this);
 
 	collision_handler = cpSpaceAddDefaultCollisionHandler(space);
@@ -21,8 +24,7 @@ physics::~physics() {
 }
 
 void physics::add(const physics_entity &create) {
-	physics_entity physics_entity = create;
-
+	physics_entity_t &physics_entity = zsys::add(create);
 	//cpFloat mass = physics_entity.radius * physics_entity.radius;
 	cpFloat mass = 1;
 	//cpFloat moment = cpMomentForCircle(mass, 0, physics_entity.radius*2, cpvzero);
@@ -45,11 +47,10 @@ void physics::add(const physics_entity &create) {
 	//cpShapeSetElasticity(&e.circle.shape, 0.0f);
 	//cpShapeSetFriction(&e.circle.shape, 0.7f);
 
-	physics_entity_t &created = zsys::add(physics_entity);
-	cpBodySetUserData(created.body, &created);
-	cpShapeSetUserData(&created.circle->shape, &created);
-	cpSpaceAddBody(space, created.body);
-	cpSpaceAddShape(space, &created.circle->shape);
+	cpBodySetUserData(physics_entity.body, &physics_entity);
+	cpShapeSetUserData(&physics_entity.circle->shape, &physics_entity);
+	cpSpaceAddBody(space, physics_entity.body);
+	cpSpaceAddShape(space, &physics_entity.circle->shape);
 }
 void physics::del(id id) {
 	physics_entity *physics_entity = get(id);

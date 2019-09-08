@@ -1,19 +1,19 @@
 #include <control.hpp>
 
-void control::update(camera &camera, const ui &ui, const physics &physics, const map &map, flight &flight, float dt) {
+void control::update(camera &camera, const ui &ui, const physics &physics, const map &map, flight &flight, caster &caster, float dt) {
+	camera.zoom = float(ZOOM_DEFAULT - tanh(ui.scroll.y * zoom_rate) * ZOOM_DEFAULT);
 	if (ui.keys[GLFW_KEY_LEFT] == GLFW_PRESS) {
-		camera.position.x -= scroll_rate * dt;
+		camera.position.x -= camera.zoom * scroll_rate * dt;
 	}
 	if (ui.keys[GLFW_KEY_RIGHT] == GLFW_PRESS) {
-		camera.position.x += scroll_rate * dt;
+		camera.position.x += camera.zoom * scroll_rate * dt;
 	}
 	if (ui.keys[GLFW_KEY_UP] == GLFW_PRESS) {
-		camera.position.y += scroll_rate * dt;
+		camera.position.y += camera.zoom * scroll_rate * dt;
 	}
 	if (ui.keys[GLFW_KEY_DOWN] == GLFW_PRESS) {
-		camera.position.y -= scroll_rate * dt;
+		camera.position.y -= camera.zoom * scroll_rate * dt;
 	}
-	camera.zoom = float(ZOOM_DEFAULT - ui.scroll.y * zoom_rate);
 
 	glm::vec4 viewport = glm::vec4(0, 0, ui.window_size.x, ui.window_size.y);
 	pick_start = glm::unProject(glm::vec3(ui.pointer.x, ui.pointer.y, 0), camera.view, camera.projection, viewport);
@@ -52,24 +52,13 @@ void control::update(camera &camera, const ui &ui, const physics &physics, const
 			flight_entity.turn = turn;
 		});
 
-		physics.get(select_entity, [&](const physics_entity &physics_entity) {
-			int found = 0;
-			map.query_point(physics_entity.position, 64, [&](id id) {
-				if (id != physics_entity.id) {
-					++found;
-				}
+		if (ui.button(GLFW_MOUSE_BUTTON_2) == UI_RELEASED) {
+			caster.get(select_entity, [&](caster_entity &caster_entity) {
+				caster_entity.abilities.foreach([&](caster_ability &caster_ability) {
+					caster_ability.target.point = glm::vec2(ui.pointer.x, ui.pointer.y);
+					caster_ability.cast = true;
+				});
 			});
-			int found2 = 0;
-			physics.query_point(physics_entity.position, 64, [&](const physics_entity_t &near_entity) {
-				if (near_entity.id != physics_entity.id) {
-					++found2;
-				}
-			});
-			physics.query_ray(physics_entity.position, physics_entity.position + physics_entity.velocity, 1, [&](const physics_entity_t &near_entity, const glm::vec2 &point) {
-			});
-			if (found || found2) {
-				printf("found %d %d\n", found, found2);
-			}
-		});
+		}
 	}
 }

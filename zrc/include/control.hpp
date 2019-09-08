@@ -6,20 +6,20 @@
 #include <physics.hpp>
 #include <map.hpp>
 #include <flight.hpp>
-#include <visual.hpp>
+#include <caster.hpp>
 
 typedef struct control {
 	const float ZOOM_DEFAULT = 512;
 
-	float scroll_rate = 100;
-	float zoom_rate = 100;
+	float scroll_rate = 0.5f;
+	float zoom_rate = 0.1f;
 
 	glm::vec3 pick_start;
 	glm::vec3 pick_end;
 	id hover_entity;
 	id select_entity;
 
-	void update(camera &, const ui &, const physics &, const map &, flight &, float dt);
+	void update(camera &, const ui &, const physics &, const map &, flight &, caster &, float dt);
 } control_t;
 
 #endif

@@ -35,9 +35,9 @@ void main() {
 	ivec2 map_coord = ivec2(v_position / map_scale);
 
 	float d = 1e10;
-	//d = min(d, grid_line((v_position + map_scale / 2) / map_scale) * map_scale);
+	d = min(d, grid_line((v_position) / map_scale) * map_scale);
 	//d = min(d, grid_point((v_position + map_scale / 2) / map_scale) * map_scale);
-	d = min(d, hexagon(v_position, map_scale).z);
+	//d = min(d, hexagon(v_position, map_scale).z);
 
 	color += rgb(3, 3, 3);
 	color += vec3(hash1(v_position)) * 0.01;
